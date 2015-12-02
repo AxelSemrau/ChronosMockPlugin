@@ -26,7 +26,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Zaphod\bin\x86\Debug\Plugins\</OutputPath>
+    <OutputPath>..\..\..\..\..\Program Files %28x86%29\Chronos\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,6 +42,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Chronos">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Chronos\Chronos.exe</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -98,13 +102,6 @@
     <Compile Include="StatusViewControl.Designer.cs">
       <DependentUpon>StatusViewControl.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ChronosPluginInterfaces\ChronosPluginInterfaces.csproj">
-      <Project>{2F86FD28-E7CE-485F-BB7F-ADDB74F749E7}</Project>
-      <Name>ChronosPluginInterfaces</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrappuccinoCompositionEditor.de.resx">

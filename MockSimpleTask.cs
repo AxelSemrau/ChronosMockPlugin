@@ -9,7 +9,9 @@ namespace MockPlugin
     /// <summary>
     /// A task which does not need access to the custom device.
     /// </summary>
-    public class ShowSomeGreeting :  ITask, IDemoAwareTask, IHaveRunlogOutput, ITraceLogger, IReactOnCultureChanges
+    public class ShowSomeGreeting :  ITask, IDemoAwareTask, IHaveRunlogOutput, ITraceLogger, 
+        // ambigous name otherwise: For historical reasons, Chronos has a type of the same name in the global namespace, sorry!
+        AxelSemrau.Chronos.Plugin.IReactOnCultureChanges
     {
 
         private string mGreetingsText = DefaultGreetingsAttribute.defGreeting;
