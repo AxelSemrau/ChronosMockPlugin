@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5AB153C0-A99A-4572-8A8D-26AAFAD4F496}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MockPlugin</RootNamespace>
+    <AssemblyName>MockPlugin</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Zaphod\bin\x86\Debug\Plugins\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrappuccinoCompositionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrappuccinoCompositionEditor.Designer.cs">
+      <DependentUpon>FrappuccinoCompositionEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MockDevice.cs" />
+    <Compile Include="MockDeviceToolbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MockDeviceToolbox.Designer.cs">
+      <DependentUpon>MockDeviceToolbox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MockDynamicProperties.cs" />
+    <Compile Include="MockSampleListWorker.cs" />
+    <Compile Include="MockJobInspectingTask.cs" />
+    <Compile Include="MockSimpleTask.cs" />
+    <Compile Include="MockUseDeviceTasks.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\LocalizeMockPlugin.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalizeMockPlugin.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RemoteAccessTester\RemoteInterface.cs" />
+    <Compile Include="RemoteServiceImplementation.cs" />
+    <Compile Include="ShowPluginIsInCharge.xaml.cs">
+      <DependentUpon>ShowPluginIsInCharge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StatusViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StatusViewControl.Designer.cs">
+      <DependentUpon>StatusViewControl.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChronosPluginInterfaces\ChronosPluginInterfaces.csproj">
+      <Project>{2F86FD28-E7CE-485F-BB7F-ADDB74F749E7}</Project>
+      <Name>ChronosPluginInterfaces</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FrappuccinoCompositionEditor.de.resx">
+      <DependentUpon>FrappuccinoCompositionEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrappuccinoCompositionEditor.resx">
+      <DependentUpon>FrappuccinoCompositionEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\LocalizeMockPlugin.de.resx" />
+    <EmbeddedResource Include="MockDeviceToolbox.resx">
+      <DependentUpon>MockDeviceToolbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\LocalizeMockPlugin.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalizeMockPlugin.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatusViewControl.resx">
+      <DependentUpon>StatusViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\Mock.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ShowPluginIsInCharge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
