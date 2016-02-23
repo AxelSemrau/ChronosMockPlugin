@@ -70,6 +70,7 @@ namespace MockPlugin
             {
                 rbLowIce.Checked = true;
             }
+            lblDevName.Text = mData.DevInEditor?.Name ?? "(not set)";
         }
         /// <summary>
         /// If we set the controls' values from the constructor, sometimes they don't get updated properly.

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms.Design;
+using System.Xml.Serialization;
 using MockPlugin;
 using MockPlugin.Properties;
 
@@ -125,6 +126,9 @@ namespace MockPlugin
         [Editor(typeof(CompositionEditor), typeof(UITypeEditor))]
         public class CompositionData
         {
+            [XmlIgnore]
+            public MockDevice DevInEditor { get; set; }
+
             public CreamType Cream
             {
                 get;
@@ -209,10 +213,21 @@ namespace MockPlugin
         /// </summary>
         public CompositionData Composition
         {
-            get { return mComposition; }
+            get
+            {
+                if (mComposition != null && mComposition.DevInEditor == null)
+                {
+                    mComposition.DevInEditor = mDevInEditor;
+                }
+                return mComposition;
+            }
             set 
             { 
                 mComposition = value;
+                if (mComposition != null)
+                {
+                    mComposition.DevInEditor = mDevInEditor;
+                }
                 RaiseVolumeChanged();
             }
         }
@@ -292,8 +307,18 @@ namespace MockPlugin
                         Volume = (uint)conv.ConvertFrom(null, System.Globalization.CultureInfo.InvariantCulture, propValue);
                     }
                 }
-            }            
+            }
+            else if (propName == "Autosampler")
+            {
+                mDevInEditor = MockDevice.Instances.FirstOrDefault(someDev => someDev.Name == propValue?.ToString());
+                if (mComposition != null)
+                {
+                    mComposition.DevInEditor = mDevInEditor;
+                }
+            }           
         }
+
+        private MockDevice mDevInEditor;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

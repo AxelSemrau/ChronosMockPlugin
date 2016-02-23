@@ -41,14 +41,16 @@
             this.cboSize = new System.Windows.Forms.ComboBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblDevName = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // propertyGrid3
             // 
-            resources.ApplyResources(this.propertyGrid3, "propertyGrid3");
             this.propertyGrid3.CategoryForeColor = System.Drawing.SystemColors.InactiveCaptionText;
+            resources.ApplyResources(this.propertyGrid3, "propertyGrid3");
             this.propertyGrid3.Name = "propertyGrid3";
             // 
             // rbLowFat
@@ -61,10 +63,10 @@
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.rbVeganCream);
             this.groupBox1.Controls.Add(this.rbRegularCream);
             this.groupBox1.Controls.Add(this.rbLowFat);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
@@ -82,9 +84,9 @@
             // 
             // groupBox2
             // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.rbLotsOfIce);
             this.groupBox2.Controls.Add(this.rbLowIce);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
@@ -108,13 +110,13 @@
             // 
             // cboSize
             // 
-            resources.ApplyResources(this.cboSize, "cboSize");
             this.cboSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSize.FormattingEnabled = true;
             this.cboSize.Items.AddRange(new object[] {
             resources.GetString("cboSize.Items"),
             resources.GetString("cboSize.Items1"),
             resources.GetString("cboSize.Items2")});
+            resources.ApplyResources(this.cboSize, "cboSize");
             this.cboSize.Name = "cboSize";
             // 
             // btnOK
@@ -132,10 +134,22 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // lblDevName
+            // 
+            resources.ApplyResources(this.lblDevName, "lblDevName");
+            this.lblDevName.Name = "lblDevName";
+            // 
             // FrappuccinoCompositionEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblDevName);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.cboSize);
@@ -169,6 +183,7 @@
         private System.Windows.Forms.ComboBox cboSize;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
-
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblDevName;
     }
 }
