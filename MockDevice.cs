@@ -1,5 +1,6 @@
 ﻿using AxelSemrau.Chronos.Plugin;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
@@ -19,7 +20,8 @@ namespace MockPlugin
         IProvideStatusMessages,
         IHaveDebugOutput,
         IAbortSchedules,
-        INotifyPropertyChanged
+        INotifyPropertyChanged,
+        IDisposable
     {
         #region private variables
 
@@ -43,6 +45,15 @@ namespace MockPlugin
         public MockDevice()
         {
             mGUIdispatcher = Dispatcher.CurrentDispatcher;
+            Instances.Add(this);
+        }
+
+        internal static List<MockDevice> Instances = new List<MockDevice>();
+
+        public void Dispose()
+        {
+            Instances.Remove(this);
+            DebugOutput?.Invoke($"MockDevice {Name} disposed");
         }
 
         /// <summary>
