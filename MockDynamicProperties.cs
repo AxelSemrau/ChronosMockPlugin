@@ -207,7 +207,7 @@ namespace MockPlugin
                     {
                         myProps.Add(new MyPropertyDescriptor(string.Format("FakeProp{0}", i), typeof(string)));
                     }
-                    /// when the number is decreased, we just present a part of our internal list
+                    // when the number is decreased, we just present a part of our internal list
                     mPropDescColl = new PropertyDescriptorCollection(myProps.Take((int)mPropCount).ToArray());
                     TypeDescriptor.Refresh(this);
                 }
