@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 
-namespace MockPlugin
+namespace MockPlugin.RemoteAccessTester
 {
     /// <summary>
     /// Very basic service, only to show that you can trigger some action from outside and

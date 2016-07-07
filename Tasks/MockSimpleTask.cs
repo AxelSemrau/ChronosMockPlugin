@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using AxelSemrau.Chronos.Plugin;
-using System.Drawing;
 
-namespace MockPlugin
+namespace MockPlugin.Tasks
 {
     /// <summary>
     /// A task which does not need access to the custom device.

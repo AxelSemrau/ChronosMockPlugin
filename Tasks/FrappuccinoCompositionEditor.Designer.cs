@@ -1,4 +1,4 @@
-﻿namespace MockPlugin
+﻿namespace MockPlugin.Tasks
 {
     partial class FrappuccinoCompositionEditor
     {

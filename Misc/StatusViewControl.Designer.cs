@@ -1,4 +1,4 @@
-﻿namespace MockPlugin
+﻿namespace MockPlugin.Misc
 {
     partial class StatusViewControl
     {

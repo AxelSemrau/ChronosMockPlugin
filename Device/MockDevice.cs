@@ -1,12 +1,13 @@
-﻿using AxelSemrau.Chronos.Plugin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using AxelSemrau.Chronos.Plugin;
+using MockPlugin.Tasks;
 
-namespace MockPlugin
+namespace MockPlugin.Device
 {
     /// <summary>
     /// A chronos plugin implementation for a fake device.

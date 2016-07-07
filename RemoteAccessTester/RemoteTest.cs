@@ -4,7 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
 
-namespace RemoteAccessTester
+namespace MockPlugin.RemoteAccessTester
 {
     /// <summary>
     /// Shows how to communicate from an external program with a Plugin in order to trigger actions in Chronos.
@@ -16,19 +16,19 @@ namespace RemoteAccessTester
             InitializeComponent();
         }
 
-        private MockPlugin.IMockPlugin mService;
+        private IMockPlugin mService;
 
         /// <summary>
         /// Get the service when it is needed for the first time.
         /// </summary>
-        private MockPlugin.IMockPlugin Service
+        private IMockPlugin Service
         {
             get
             {
                 if (mService == null)
                 {
-                    var endpoint = new EndpointAddress(MockPlugin.EndpointDef.Endpoint);
-                    mService = ChannelFactory<MockPlugin.IMockPlugin>.CreateChannel(new NetTcpBinding(), endpoint);
+                    var endpoint = new EndpointAddress(EndpointDef.Endpoint);
+                    mService = ChannelFactory<IMockPlugin>.CreateChannel(new NetTcpBinding(), endpoint);
                 }
                 return mService;
             }
