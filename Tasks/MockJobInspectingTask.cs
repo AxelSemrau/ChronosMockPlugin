@@ -1,10 +1,8 @@
-﻿using AxelSemrau.Chronos.Plugin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
+using AxelSemrau.Chronos.Plugin;
 
-namespace MockPlugin
+namespace MockPlugin.Tasks
 {
     public class JobInspectionDemo : ITask, INeedToInspectOtherTasks, INeedToCheckForJITLinks
     {

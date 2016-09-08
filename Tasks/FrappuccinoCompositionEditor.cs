@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-namespace MockPlugin
+namespace MockPlugin.Tasks
 {
     /// <summary>
     /// Provides an editor for the BrewFrappuccino-Task's "Composition" information.

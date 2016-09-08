@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MockPlugin
+namespace MockPlugin.SampleList
 {
     /// <summary>
     /// Provides an endless supply of nonsense sample lists.
@@ -82,7 +79,9 @@ namespace MockPlugin
                     var ex = RunSampleList(this,
                         new AxelSemrau.Chronos.Plugin.RunSampleListEventArgs()
                         {
-                            SampleListFile = @"C:\Users\Patrick\Documents\Chronos\MoveTest.csl"
+                            //SampleListFile = @"C:\Users\Patrick\Documents\Chronos\MoveTest.csl"
+                            ExtendLastPlanner = true,
+                            StartAndWaitForEnd = false
                         }
                     );
                     if (ex != null)

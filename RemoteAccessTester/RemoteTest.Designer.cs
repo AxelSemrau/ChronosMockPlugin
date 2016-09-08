@@ -1,4 +1,4 @@
-﻿namespace RemoteAccessTester
+﻿namespace MockPlugin.RemoteAccessTester
 {
     partial class MessageTesterForm
     {

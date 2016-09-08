@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,16 +13,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MockPlugin
+namespace MockPlugin.Acquisition_Service
 {
     /// <summary>
-    /// Interaction logic for ShowPluginIsInCharge.xaml
+    /// Interaktionslogik für ConfigDialog.xaml
     /// </summary>
-    public partial class ShowPluginIsInCharge : Window
+    public partial class ConfigDialog : Window
     {
-        public ShowPluginIsInCharge()
+        public ConfigDialog()
         {
             InitializeComponent();
+        }
+
+        public string ParamText { get { return txtSomeParameter.Text; } set { txtSomeParameter.Text = value; } }
+
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

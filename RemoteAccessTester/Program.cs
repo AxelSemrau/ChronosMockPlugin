@@ -15,7 +15,7 @@ namespace RemoteAccessTester
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MessageTesterForm());
+            Application.Run(new MockPlugin.RemoteAccessTester.MessageTesterForm());
         }
     }
 }

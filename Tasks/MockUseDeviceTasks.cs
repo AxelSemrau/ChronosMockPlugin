@@ -1,15 +1,14 @@
-﻿using AxelSemrau.Chronos.Plugin;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
-using MockPlugin;
+using AxelSemrau.Chronos.Plugin;
+using MockPlugin.Device;
 using MockPlugin.Properties;
 
-namespace MockPlugin
+namespace MockPlugin.Tasks
 {
     /// <summary>
     /// Base class for our example, just contains some empty default implementations and a check for the right device type.

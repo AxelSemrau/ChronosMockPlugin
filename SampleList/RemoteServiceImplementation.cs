@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
+using MockPlugin.RemoteAccessTester;
 
-namespace MockPlugin
+namespace MockPlugin.SampleList
 {
     /// <summary>
     /// Example for communication with external programs.

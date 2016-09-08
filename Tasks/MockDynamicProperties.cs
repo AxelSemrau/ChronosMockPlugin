@@ -1,10 +1,10 @@
-﻿using AxelSemrau.Chronos.Plugin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using AxelSemrau.Chronos.Plugin;
 
-namespace MockPlugin
+namespace MockPlugin.Tasks
 {
     /// <summary>
     /// This task demonstrates how to use a custom type descriptor to implement a dynamic list of properties.

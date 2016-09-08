@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using MockPlugin.Device;
 
-namespace MockPlugin
+namespace MockPlugin.Misc
 {
     public partial class StatusViewControl : UserControl, AxelSemrau.Chronos.Plugin.IStatusView<MockDevice>
     {
