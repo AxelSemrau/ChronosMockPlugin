@@ -4,3 +4,11 @@
 
 /.vs/MockPlugin/v14/.suo
 /obj/Debug
+/bin/Debug
+/.vs/MockPlugin/v15
+/MockSetup/wix
+*.msi
+*.wxs
+/MockSetup/obj/Debug
+/MockSetup/bin/Debug
+/packages

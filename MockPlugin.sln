@@ -1,9 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockPlugin", "MockPlugin.csproj", "{5AB153C0-A99A-4572-8A8D-26AAFAD4F496}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{53FCE552-6690-431A-A3A7-A35BA3C95EBA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugin", "Plugin", "{FE50CC56-09D5-4E50-A9D5-625D1E88CC1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockSetup", "MockSetup\MockSetup.csproj", "{C9A243E5-6443-4A00-ACAC-C20A61286264}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5AB153C0-A99A-4572-8A8D-26AAFAD4F496} = {5AB153C0-A99A-4572-8A8D-26AAFAD4F496}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +24,16 @@ Global
 		{5AB153C0-A99A-4572-8A8D-26AAFAD4F496}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AB153C0-A99A-4572-8A8D-26AAFAD4F496}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AB153C0-A99A-4572-8A8D-26AAFAD4F496}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9A243E5-6443-4A00-ACAC-C20A61286264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9A243E5-6443-4A00-ACAC-C20A61286264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9A243E5-6443-4A00-ACAC-C20A61286264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9A243E5-6443-4A00-ACAC-C20A61286264}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5AB153C0-A99A-4572-8A8D-26AAFAD4F496} = {FE50CC56-09D5-4E50-A9D5-625D1E88CC1C}
+		{C9A243E5-6443-4A00-ACAC-C20A61286264} = {53FCE552-6690-431A-A3A7-A35BA3C95EBA}
 	EndGlobalSection
 EndGlobal
