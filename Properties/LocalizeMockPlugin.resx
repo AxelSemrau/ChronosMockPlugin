@@ -117,9 +117,13 @@
     <value>The coffee machine's heater failed.</value>
   </data>
   <data name="PretendCoffeeMachineIsBroken_GetTaskAction_Will_make_the_device_abort_the_schedule_after_a_few_seconds_" xml:space="preserve">
-    <value>Will make the device abort the schedule after a few seconds.</value>
+    <value>Will make the device abort the schedule after a few seconds. SoftStop is {0}.</value>
   </data>
   <data name="CompositionData_ToString_Cream___0___MuchIce___1___Decaffeinated___2___Size___3__mL" xml:space="preserve">
     <value>Cream: {0}; MuchIce: {1}; Decaffeinated: {2}, Size: {3} mL</value>
+  </data>
+  <data name="StatusViewControl_timer1_Tick_" xml:space="preserve">
+    <value>Status text at {0}
+for device {1}</value>
   </data>
 </root>

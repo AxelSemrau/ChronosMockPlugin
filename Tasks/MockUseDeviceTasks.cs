@@ -1,15 +1,19 @@
-﻿using AxelSemrau.Chronos.Plugin;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
-using MockPlugin;
+using AxelSemrau.Chronos.Plugin;
+using MockPlugin.Device;
 using MockPlugin.Properties;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
-namespace MockPlugin
+namespace MockPlugin.Tasks
 {
     /// <summary>
     /// Base class for our example, just contains some empty default implementations and a check for the right device type.
@@ -27,9 +31,8 @@ namespace MockPlugin
             mDevice = yourDevice as MockDevice;
             if (mDevice == null && yourDevice != null)
             {
-                throw new ArgumentException(String.Format("Device type {0} is not usable for a {1}.",
-                                                yourDevice.DisplayedTypeName,
-                                                GetType().Name));
+                throw new ArgumentException(
+                    $"Device type {yourDevice.DisplayedTypeName} is not usable for a {GetType().Name}.");
             }
             if (yourDevice == null)
             {
@@ -74,6 +77,7 @@ namespace MockPlugin
     /// It has some ordinary properties and feeds these values into some operation on the device.
     /// </remarks>
     [CoffeeCategory(1)]
+    [ScheduleDiagramColor("Sienna")]
     public class BrewCoffee : CoffeeMachineBaseTask, ITaskForDevice
     {
         /// <summary>
@@ -106,9 +110,10 @@ namespace MockPlugin
     /// This task has some more complex property which is assumed to be not suitable for simple text editing and token substitution or calculations.
     /// Therefore, we have to provide an editor of our own. The property data will be serialized and stored within the Chronos method.
     /// The Volume parameter can also be set directly from the method editor like a normal property.
+    /// Additionally, the task has a rough idea of how long it can take.
     /// </remarks>
     [CoffeeCategory(2)]
-    public class BrewFrappuccino : CoffeeMachineBaseTask, ITaskForDevice, IWantEditorUpdates, INotifyPropertyChanged
+    public class BrewFrappuccino : CoffeeMachineBaseTask, ITaskForDevice, IWantEditorUpdates, IGiveARuntimeHint , INotifyPropertyChanged
     {
         /// <summary>
         /// Enum properties result in nice drop-down lists.
@@ -190,14 +195,14 @@ namespace MockPlugin
             /// <returns></returns>
             public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
             {
-                var editProvider = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+                var editProvider = (IWindowsFormsEditorService)provider?.GetService(typeof(IWindowsFormsEditorService));
                 // create the editor form
-                var compData = (BrewFrappuccino.CompositionData)value;
+                var compData = (CompositionData)value;
                 // we could get a reference to the task here: var theTask = context.Instance as BrewFrappuccino;
                 using (var myEditor = new FrappuccinoCompositionEditor(compData))
                 {
                     // our editor will only modify the parameters if it has been closed by clicking OK
-                    editProvider.ShowDialog(myEditor);
+                    editProvider?.ShowDialog(myEditor);
                 }
                 return value;
             }
@@ -234,17 +239,14 @@ namespace MockPlugin
 
         public string GetTaskAction()
         {
-            return LocalizeMockPlugin.BrewFrappuccino_GetTaskAction_Brew_a_frappuccino__composition__ + Composition.ToString();
+            return LocalizeMockPlugin.BrewFrappuccino_GetTaskAction_Brew_a_frappuccino__composition__ + Composition;
         }
 
 
         [DefaultUnit("mL")]
         public uint Volume
         {
-            get
-            {
-                return mComposition.Volume;
-            }
+            get => mComposition.Volume;
             set
             {
                 if(mComposition.Volume == value) return;
@@ -254,10 +256,7 @@ namespace MockPlugin
         }
         internal void RaiseVolumeChanged()
         {
-            if(PropertyChanged != null)
-            {
-                PropertyChanged(this,new PropertyChangedEventArgs(nameof(Volume)));
-            }
+            PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(Volume)));
         }
         [DefaultUnit("mL")]
         public uint CupSize
@@ -295,15 +294,16 @@ namespace MockPlugin
             if (propName == nameof(Volume))
             {
                 // the uint32 converter can't convert from uint32 to uint32 but throws an exception.
-                if (propValue is uint)
+                if (propValue is uint u)
                 {
-                    Volume = (uint)propValue;
+                    Volume = u;
                 }
                 else
                 {
                     var conv = TypeDescriptor.GetConverter(Volume, true);
                     if (conv.IsValid(propValue))
                     {
+                        // ReSharper disable once PossibleNullReferenceException
                         Volume = (uint)conv.ConvertFrom(null, System.Globalization.CultureInfo.InvariantCulture, propValue);
                     }
                 }
@@ -321,21 +321,49 @@ namespace MockPlugin
         private MockDevice mDevInEditor;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #region Implementation of IGiveARuntimeHint
+
+        /// <summary>
+        /// Return some fake runtimes depending on the requested volume.
+        /// </summary>
+        public int? CalculatedRuntime
+        {
+            get
+            {
+                if (Volume > 250)
+                {
+                    return 30;
+                }
+
+                if (Volume > 100)
+                {
+                    return 15;
+                }
+
+                return 10;
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>
     /// This task will trigger a timer in our device which will make it complain about an error situation, even if at that time no task is trying to use it.
     /// </summary>
+    [CoffeeCategory(3)]
     public class PretendCoffeeMachineIsBroken : CoffeeMachineBaseTask, ITaskForDevice
     {
+        public bool SoftStop { get; set; }
         public void Execute()
         {
-            mDevice.TriggerAbort(LocalizeMockPlugin.PretendCoffeeMachineIsBroken_Execute_The_coffee_machine_s_heater_failed_);
+            mDevice.TriggerAbort(LocalizeMockPlugin
+                    .PretendCoffeeMachineIsBroken_Execute_The_coffee_machine_s_heater_failed_,SoftStop);
         }
 
         public string GetTaskAction()
         {
-            return LocalizeMockPlugin.PretendCoffeeMachineIsBroken_GetTaskAction_Will_make_the_device_abort_the_schedule_after_a_few_seconds_;
+            return String.Format(LocalizeMockPlugin.PretendCoffeeMachineIsBroken_GetTaskAction_Will_make_the_device_abort_the_schedule_after_a_few_seconds_,SoftStop);
         }
     }
 }

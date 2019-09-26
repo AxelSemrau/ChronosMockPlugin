@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-namespace MockPlugin
+namespace MockPlugin.Tasks
 {
     /// <summary>
     /// Provides an editor for the BrewFrappuccino-Task's "Composition" information.
@@ -32,7 +26,7 @@ namespace MockPlugin
         /// <summary>
         /// Let the GUI reflect our data.
         /// </summary>
-        private void CopyDataToGUI()
+        private void CopyDataToGui()
         {
             if (mData.Volume < 200)
             {
@@ -57,9 +51,6 @@ namespace MockPlugin
                 case BrewFrappuccino.CreamType.Vegan:
                     rbVeganCream.Checked = true;
                     break;
-                default:
-                    break;
-
             }
             chkCaffeine.Checked = !mData.DeCaffeinated;
             if (mData.MuchIce)
@@ -79,26 +70,25 @@ namespace MockPlugin
         /// <param name="e"></param>
         private void FrappuccinoCompositionEditor_Shown(object sender, EventArgs e)
         {
-            CopyDataToGUI();
+            CopyDataToGui();
         }
 
         /// <summary>
         /// When the user clicked on OK, we want to push the state represented by the GUI into our composition object.
         /// </summary>
-        private void CopyGUItoData()
+        private void CopyGuItoData()
         {
-            var oldVol = mData.Volume;
-            if (cboSize.SelectedIndex == 0)
+            switch (cboSize.SelectedIndex)
             {
-                mData.Volume = 150;
-            }
-            else if (cboSize.SelectedIndex == 1)
-            {
-                mData.Volume = 250;
-            }
-            else
-            {
-                mData.Volume = 450;
+                case 0:
+                    mData.Volume = 150;
+                    break;
+                case 1:
+                    mData.Volume = 250;
+                    break;
+                default:
+                    mData.Volume = 450;
+                    break;
             }
             mData.MuchIce = rbLotsOfIce.Checked;
             mData.DeCaffeinated = !chkCaffeine.Checked;
@@ -122,7 +112,7 @@ namespace MockPlugin
         /// <param name="e"></param>
         private void btnOK_Click(object sender, EventArgs e)
         {
-            CopyGUItoData();
+            CopyGuItoData();
         }
     }
 }

@@ -1,15 +1,19 @@
-﻿using AxelSemrau.Chronos.Plugin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Windows.Media;
+using AxelSemrau.Chronos.Plugin;
 
-namespace MockPlugin
+namespace MockPlugin.Tasks
 {
     /// <summary>
     /// This task demonstrates how to use a custom type descriptor to implement a dynamic list of properties.
     /// The number of properties can be changed by setting the PropCount property.
     /// </summary>
+    [ScheduleDiagramColor(nameof(Colors.RoyalBlue))]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class FlexibleArguments : CustomTypeDescriptor, ITask
     {
         #region ITask implementation, does nothing but show the parameter list in the time table
@@ -57,22 +61,24 @@ namespace MockPlugin
         /// <summary>
         /// Storage for fake property names and values
         /// </summary>
-        private Dictionary<string, object> mPropsValues = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> mPropsValues = new Dictionary<string, object>();
 
         public FlexibleArguments()
         {
+            // if we don't return this when asked, the ScheduleDiagramColor declaration above will not be seen by Chronos.
+            mAttrs = TypeDescriptor.GetAttributes(this, noCustomTypeDesc: true);
             // Default descriptor for the only real property
-            var reflPropDesc = TypeDescriptor.GetProperties(this, noCustomTypeDesc: true).Find("PropCount", false);
-            myProps.Add(reflPropDesc);
+            var reflProp = TypeDescriptor.GetProperties(this, noCustomTypeDesc: true).Find(nameof(PropCount), false);
+            mProps.Add(reflProp);
             // Add some fake properties to start with
             // This one has a unit:
-            myProps.Add(new MyPropertyDescriptor("SomeIntParam", typeof(int), "s"));
+            mProps.Add(new MyPropertyDescriptor("SomeIntParam", typeof(int), "s"));
             var resProp = new MyPropertyDescriptor("SomeCalculationResult", typeof(int));
             resProp.AddAttribute(new ReadOnlyAttribute(true));
-            myProps.Add(resProp);
-            myProps.Add(new MyPropertyDescriptor("SomeStringParam", typeof(string)));
-            myProps.Add(new MyPropertyDescriptor("SomeBoolParam", typeof(bool)));
-            PropCount = (uint)myProps.Count;
+            mProps.Add(resProp);
+            mProps.Add(new MyPropertyDescriptor("SomeStringParam", typeof(string)));
+            mProps.Add(new MyPropertyDescriptor("SomeBoolParam", typeof(bool)));
+            PropCount = (uint)mProps.Count;
         }
 
         #region Type descriptor implementation
@@ -95,13 +101,12 @@ namespace MockPlugin
         {
             private readonly List<Attribute> mExtraAttributes = new List<Attribute>();
             private readonly string mName;
-            private readonly Type mType;
 
             public MyPropertyDescriptor(string name, Type proptype, string unit = null)
                 : base(new MyMemberDescriptor(name))
             {
                 mName = name;
-                mType = proptype;
+                PropertyType = proptype;
                 AddAttribute(new DefaultUnitAttribute(unit));
             }
 
@@ -119,26 +124,18 @@ namespace MockPlugin
                 }
             }
 
-            public override Type PropertyType
-            {
-                get { return mType; }
-            }
+            public override Type PropertyType { get; }
 
-            public override Type ComponentType
-            {
-                get { return typeof(FlexibleArguments); }
-            }
+            public override Type ComponentType => typeof(FlexibleArguments);
 
             public override void SetValue(object component, object value)
             {
-                var myObj = component as FlexibleArguments;
-                myObj.mPropsValues[mName] = value;
+                ((FlexibleArguments) component).mPropsValues[mName] = value;
             }
 
             public override object GetValue(object component)
             {
-                object retval = null;
-                (component as FlexibleArguments).mPropsValues.TryGetValue(mName, out retval);
+                ((FlexibleArguments) component).mPropsValues.TryGetValue(mName, out var retval);
                 return retval;
             }
 
@@ -153,10 +150,7 @@ namespace MockPlugin
                 // nothing
             }
 
-            public override bool IsReadOnly
-            {
-                get { return mExtraAttributes.OfType<ReadOnlyAttribute>().Any(); }
-            }
+            public override bool IsReadOnly => mExtraAttributes.OfType<ReadOnlyAttribute>().Any();
 
             public override bool ShouldSerializeValue(object component)
             {
@@ -171,7 +165,7 @@ namespace MockPlugin
         /// <returns></returns>
         public override object GetPropertyOwner(PropertyDescriptor pd)
         {
-            return myProps.Contains(pd) ? this : null;
+            return mProps.Contains(pd) ? this : null;
         }
 
         /// <summary>
@@ -184,18 +178,18 @@ namespace MockPlugin
             return mPropDescColl;
         }
 
+        public override AttributeCollection GetAttributes() => mAttrs;
+
         #endregion Type descriptor implementation
 
-        private List<PropertyDescriptor> myProps = new List<PropertyDescriptor>();
+        private readonly List<PropertyDescriptor> mProps = new List<PropertyDescriptor>();
+        private readonly AttributeCollection mAttrs;
         private uint mPropCount;
 
         [DynamicPropertyMaster]
         public uint PropCount
         {
-            get
-            {
-                return mPropCount;
-            }
+            get => mPropCount;
             set
             {
                 var oldCount = mPropCount;
@@ -203,12 +197,15 @@ namespace MockPlugin
                 mPropCount = Math.Max(1, value);
                 if (oldCount != mPropCount)
                 {
-                    for (int i = myProps.Count; i < mPropCount; ++i)
+                    for (int i = mProps.Count; i < mPropCount; ++i)
                     {
-                        myProps.Add(new MyPropertyDescriptor(string.Format("FakeProp{0}", i), typeof(string)));
+                        mProps.Add(new MyPropertyDescriptor($"FakeProp{i}", typeof(string)));
                     }
                     // when the number is decreased, we just present a part of our internal list
-                    mPropDescColl = new PropertyDescriptorCollection(myProps.Take((int)mPropCount).ToArray());
+                    mPropDescColl = new PropertyDescriptorCollection(mProps.Take((int)mPropCount).ToArray());
+
+                    // the list of dynamic properties has just changed, 
+                    // alert the reflection manager so the time table can access the new properties
                     TypeDescriptor.Refresh(this);
                 }
             }

@@ -1,14 +1,9 @@
-﻿using AxelSemrau.Chronos.Plugin;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using AxelSemrau.Chronos.Plugin;
 
-namespace MockPlugin
+namespace MockPlugin.Device
 {
     /// <summary>
     /// Example implementation for a WinForms toolbox for our Mock Device.
@@ -28,10 +23,7 @@ namespace MockPlugin
 
         public MockDevice Device
         {
-            get
-            {
-                return mDev;
-            }
+            get => mDev;
             set
             {
                 mDev = value;
@@ -52,17 +44,11 @@ namespace MockPlugin
             mDev.ShowTheMessage(textBox1.Text);
         }
 
-        public Icon NavBarIcon
-        {
-            get
-            {
-                return Properties.Resources.Mock;
-            }
-        }
+        public Icon NavBarIcon => Properties.Resources.MockNormal;
 
         public bool SequenceRunning
         {
-            set { lblRunning.Text = (value ? "Sequence" : "No sequence") + " running"; }
+            set => lblRunning.Text = $@"{(value ? "Sequence" : "No sequence")} running";
         }
     }
 }

@@ -26,11 +26,12 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Zaphod\bin\x86\Debug\Plugins\</OutputPath>
+    <OutputPath>..\..\Zaphod\bin\x86\Debug\Plugins\MockPlugin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -59,27 +60,56 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrappuccinoCompositionEditor.cs">
+    <Compile Include="AcquisitionService\ConfigDialog.xaml.cs">
+      <DependentUpon>ConfigDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AcquisitionService\MockSimpleAcquisitionService.cs" />
+    <Compile Include="AcquisitionService\MockDynamicParAcquisitionService.cs" />
+    <Compile Include="Device\CoffeeMakerParamsEditor.cs" />
+    <Compile Include="Device\CoffeeMakerParamsUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrappuccinoCompositionEditor.Designer.cs">
+    <Compile Include="Device\CoffeeMakerParamsUI.Designer.cs">
+      <DependentUpon>CoffeeMakerParamsUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Device\CoffeMakerParams.cs" />
+    <Compile Include="Device\ConnectionStringEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Device\ConnectionStringEditor.Designer.cs">
+      <DependentUpon>ConnectionStringEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Device\ConnectionEditor.cs" />
+    <Compile Include="Device\DeviceSurveillance.cs" />
+    <Compile Include="Device\EditMachineParams.xaml.cs">
+      <DependentUpon>EditMachineParams.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\MockConfigUsingTask.cs" />
+    <Compile Include="Tasks\FrappuccinoCompositionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\FrappuccinoCompositionEditor.Designer.cs">
       <DependentUpon>FrappuccinoCompositionEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="MockDevice.cs" />
-    <Compile Include="MockDeviceToolbox.cs">
+    <Compile Include="Device\MockDevice.cs" />
+    <Compile Include="Device\MockDeviceToolbox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MockDeviceToolbox.Designer.cs">
+    <Compile Include="Device\MockDeviceToolbox.Designer.cs">
       <DependentUpon>MockDeviceToolbox.cs</DependentUpon>
     </Compile>
-    <Compile Include="MockDynamicProperties.cs" />
-    <Compile Include="MockSampleListWorker.cs" />
-    <Compile Include="MockJobInspectingTask.cs" />
-    <Compile Include="MockSimpleTask.cs" />
-    <Compile Include="MockUseDeviceTasks.cs" />
+    <Compile Include="Tasks\MockDynamicProperties.cs" />
+    <Compile Include="SampleList\MockSampleListWorker.cs" />
+    <Compile Include="Tasks\MockDynamicPropsDependingOnDevice.cs" />
+    <Compile Include="Tasks\MockJobInspectingTask.cs" />
+    <Compile Include="Tasks\MockMethodEditorSnoopingTask.cs" />
+    <Compile Include="Tasks\MockSimpleTask.cs" />
+    <Compile Include="Tasks\MockUseDeviceTasks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -92,26 +122,34 @@
       <DependentUpon>LocalizeMockPlugin.resx</DependentUpon>
     </Compile>
     <Compile Include="RemoteAccessTester\RemoteInterface.cs" />
-    <Compile Include="RemoteServiceImplementation.cs" />
-    <Compile Include="ShowPluginIsInCharge.xaml.cs">
+    <Compile Include="SampleList\RemoteServiceImplementation.cs" />
+    <Compile Include="SampleList\ShowPluginIsInCharge.xaml.cs">
       <DependentUpon>ShowPluginIsInCharge.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StatusViewControl.cs">
+    <Compile Include="Misc\StatusViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="StatusViewControl.Designer.cs">
+    <Compile Include="Misc\StatusViewControl.Designer.cs">
       <DependentUpon>StatusViewControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\MockUseMultipleDevicesTask.cs" />
+    <Compile Include="Tasks\TaskListAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FrappuccinoCompositionEditor.de.resx">
+    <EmbeddedResource Include="Device\CoffeeMakerParamsUI.resx">
+      <DependentUpon>CoffeeMakerParamsUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Device\ConnectionStringEditor.resx">
+      <DependentUpon>ConnectionStringEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\FrappuccinoCompositionEditor.de.resx">
       <DependentUpon>FrappuccinoCompositionEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrappuccinoCompositionEditor.resx">
+    <EmbeddedResource Include="Tasks\FrappuccinoCompositionEditor.resx">
       <DependentUpon>FrappuccinoCompositionEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\LocalizeMockPlugin.de.resx" />
-    <EmbeddedResource Include="MockDeviceToolbox.resx">
+    <EmbeddedResource Include="Device\MockDeviceToolbox.resx">
       <DependentUpon>MockDeviceToolbox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -122,18 +160,30 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizeMockPlugin.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="StatusViewControl.resx">
+    <EmbeddedResource Include="Misc\StatusViewControl.resx">
       <DependentUpon>StatusViewControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\Mock.ico" />
+    <Content Include="Properties\MockBusy.ico" />
+    <Content Include="Properties\MockNormal.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ShowPluginIsInCharge.xaml">
+    <Page Include="AcquisitionService\ConfigDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Device\EditMachineParams.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SampleList\ShowPluginIsInCharge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

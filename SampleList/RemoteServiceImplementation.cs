@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
+using AxelSemrau.Chronos.Plugin;
+using MockPlugin.RemoteAccessTester;
+// ReSharper disable LocalizableElement
 
-namespace MockPlugin
+namespace MockPlugin.SampleList
 {
     /// <summary>
     /// Example for communication with external programs.
@@ -50,14 +51,18 @@ namespace MockPlugin
             {
                 System.Windows.Forms.MessageBox.Show("Could not get main window");
             }
-            return System.Windows.Forms.MessageBox.Show(String.Format("Plugin does something on remote request: {0}\nSucceeded?", someParameter), 
+            return System.Windows.Forms.MessageBox.Show(
+                       $"Plugin does something on remote request: {someParameter}\nSucceeded?", 
                        "Remote request to plugin", 
                        System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes;
         }
         private static ServiceHost mHost;
         private static void HostFaultedHandler(object sender, EventArgs e)
         {
-            System.Windows.Forms.MessageBox.Show("Remote plugin service failed.");
+            if (Helpers.Gui != null)
+            {
+                System.Windows.Forms.MessageBox.Show(Helpers.Gui.MainWindow,"Remote plugin service failed.");
+            }
         }
         /// <summary>
         /// Starts a background service listening for external requests.
@@ -68,6 +73,21 @@ namespace MockPlugin
             mHost.AddServiceEndpoint(typeof(IMockPlugin), new NetTcpBinding(), EndpointDef.Endpoint);
             mHost.Faulted += HostFaultedHandler;
             mHost.Open();
+        }
+
+        public static void StopService()
+        {
+            try
+            {
+                if (mHost?.State == CommunicationState.Opened)
+                {
+                    mHost?.Close();
+                }
+            }
+            catch 
+            {
+                // nothing
+            }
         }
     }
 }

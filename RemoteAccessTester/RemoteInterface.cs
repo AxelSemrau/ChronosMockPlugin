@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 
-namespace MockPlugin
+/*!
+ \brief Interaction with Chronos crossing the process barrier.
+ A normal Chronos plugin is a class library loaded into Chronos.
+ If you want to interact with Chronos from a different application, you can use the techniques demonstrated here
+ to communicate with another process and remotely control Chronos.
+ */
+namespace MockPlugin.RemoteAccessTester
 {
     /// <summary>
     /// Very basic service, only to show that you can trigger some action from outside and

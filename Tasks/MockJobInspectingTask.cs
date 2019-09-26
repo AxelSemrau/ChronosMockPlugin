@@ -1,20 +1,24 @@
-﻿using AxelSemrau.Chronos.Plugin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
+using AxelSemrau.Chronos.Plugin;
+// ReSharper disable LocalizableElement
 
-namespace MockPlugin
+namespace MockPlugin.Tasks
 {
+    // ReSharper disable once UnusedMember.Global
+    /// <summary>
+    /// Shows how to get information about other tasks in the schedule.
+    /// </summary>
     public class JobInspectionDemo : ITask, INeedToInspectOtherTasks, INeedToCheckForJITLinks
     {
         #region Normal task methods
 
         void ITask.PreValidate()
         {
-            if (mJITChecker != null)
+            if (mJitChecker != null)
             {
-                System.Windows.Forms.MessageBox.Show(string.Format("My enabled property {0}", mJITChecker(this, "Enabled") ? "will be set by a JIT expression" : "has an ordinary value"), "JobInspectionDemo");
+                System.Windows.Forms.MessageBox.Show(Helpers.Gui.MainWindow,
+                    $"My enabled property {(mJitChecker(this, "Enabled") ? "will be set by a JIT expression" : "has an ordinary value")}", "JobInspectionDemo");
             }
         }
 
@@ -23,13 +27,13 @@ namespace MockPlugin
 
         }
 
-        private string GetJITInfo(ITaskInfo someTaskInfo, IAccessProperty somePropInfo)
+        private string GetJitInfo(ITaskInfo someTaskInfo, IAccessProperty somePropInfo)
         {
-            if(mJITChecker == null)
+            if(mJitChecker == null)
             {
                 return "N/A";
             }
-            return mJITChecker(someTaskInfo.Task,somePropInfo.FullPath) ? "yes" : "no";
+            return mJitChecker(someTaskInfo.Task,somePropInfo.FullPath) ? "yes" : "no";
         }
         void ITask.Execute()
         {
@@ -37,7 +41,7 @@ namespace MockPlugin
             var i = 1;
             foreach (var someTaskInfo in mJobInspector.JobsTasks)
             {
-                sb.AppendLine(string.Format("Task {0}", i++));
+                sb.AppendLine($"Task {i++}");
                 sb.AppendFormat("Class {0}, {1} properties\r\n",
                     someTaskInfo.Task.GetType().Name,
                     someTaskInfo.PropertyAccessInfos.Count());
@@ -46,11 +50,11 @@ namespace MockPlugin
                     sb.AppendFormat("Property {0}: {1}, jit? {2}\r\n",
                         somePropInfo.PropInfo.Name,
                         somePropInfo.PropInfo.GetValue(somePropInfo.BaseObject, null),
-                        GetJITInfo(someTaskInfo,somePropInfo));
+                        GetJitInfo(someTaskInfo,somePropInfo));
                 }
                 sb.AppendLine();
             }
-            System.Windows.Forms.MessageBox.Show(sb.ToString(), "Checked other tasks");
+            System.Windows.Forms.MessageBox.Show(Helpers.Gui.MainWindow, sb.ToString(), "Checked other tasks");
         }
 
         string ITask.GetTaskAction()
@@ -66,14 +70,14 @@ namespace MockPlugin
 
         IInspectJob INeedToInspectOtherTasks.JobInspector
         {
-            set { mJobInspector = value; }
+            set => mJobInspector = value;
         }
 
         #endregion Job inspection
         #region JIT Check
 
-        private JITCheckerDelegate mJITChecker; 
-        public JITCheckerDelegate JITChecker { set { mJITChecker = value; } }
+        private JITCheckerDelegate mJitChecker; 
+        public JITCheckerDelegate JITChecker { set => mJitChecker = value; }
         #endregion
 
 

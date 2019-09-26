@@ -1,0 +1,15 @@
+﻿<Window x:Class="MockPlugin.SampleList.ShowPluginIsInCharge"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             SizeToContent="WidthAndHeight" Title="Mock Plugin Sample List Generator" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+    <StackPanel>
+        <TextBlock Padding="5" TextWrapping="WrapWithOverflow" FontSize="18">The plugin is in charge of sample list generation and will start them at will.</TextBlock>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:FieldModifier="public" x:Name="AbortButton" Padding="10" Margin="10">Abort run</Button>
+            <Button x:FieldModifier="public" x:Name="StopButton" Padding="10" Margin="10">Stop queue</Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

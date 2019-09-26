@@ -1,4 +1,4 @@
-﻿namespace MockPlugin
+﻿namespace MockPlugin.Device
 {
     partial class MockDeviceToolbox
     {
