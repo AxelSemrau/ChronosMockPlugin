@@ -2,13 +2,12 @@
 # Diese .gitignore-Datei wurde von Microsoft(R) Visual Studio automatisch erstellt.
 ################################################################################
 
-/.vs/MockPlugin/v14/.suo
 /obj/Debug
-/bin/Debug
-/.vs/MockPlugin/v15
-/MockSetup/wix
-*.msi
-*.wxs
+/.vs/
+/packages/JetBrains.Annotations.2018.3.0
+/RemoteAccessTester/bin/Debug
+/RemoteAccessTester/obj/Debug
 /MockSetup/obj/Debug
 /MockSetup/bin/Debug
-/packages
+/packages/WixSharp.1.4.5.0
+/packages/WixSharp.bin.1.4.5.0

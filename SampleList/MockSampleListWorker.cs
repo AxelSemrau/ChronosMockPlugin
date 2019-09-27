@@ -1,6 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Interop;
+using AxelSemrau.Chronos;
+using AxelSemrau.Chronos.Plugin;
+// ReSharper disable LocalizableElement
 
+/*!
+ * \brief The classes in this namespace demonstrate how to interact with the Chronos sample list.
+ */
 namespace MockPlugin.SampleList
 {
     /// <summary>
@@ -10,44 +23,48 @@ namespace MockPlugin.SampleList
     /// A possible serious use would be to generate sample lists from LIMS data and to feed them
     /// to Chronos.
     /// </remarks>
+    // ReSharper disable once UnusedMember.Global
+    // ReSharper disable once ClassNeverInstantiated.Global
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class MockSampleListWorker :
-        AxelSemrau.Chronos.Plugin.INeedToRunSampleLists,
-        AxelSemrau.Chronos.Plugin.INeedCellAccess
+        INeedToRunSampleLists,
+        INeedCellAccess, IDirectDeviceAccess, IDisposable,
+        INotifyPropertyChanged,
+        IProvideDiagnosticLogs,
+        IStopRuns
     {
-        private readonly TaskScheduler mScheduler;
+        private const string NormalButtonLabel = "Run plugin provided\r\nsample lists";
+        private readonly TaskFactory mGuiFactory;
 
         public MockSampleListWorker()
         {
             // for GUI synchronized operations
-            mScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            mGuiFactory = new TaskFactory(Helpers.Gui.GuiThreadScheduler);
             // for the remote access example
             RemotePluginService.StartService();
         }
 
-        public string ButtonCaption
-        {
-            get { return "Run plugin provided\r\nsample lists"; }
-        }
+        public string ButtonCaption { get; private set; } = NormalButtonLabel;
 
-        public System.Drawing.Icon ButtonIcon
-        {
-            get { return Properties.Resources.Mock; }
-        }
+        public System.Drawing.Icon ButtonIcon { get; private set; } = Properties.Resources.MockNormal;
 
         /// <summary>
         /// Ask the user if he wants to start more schedules.
         /// </summary>
-        /// <param name="mainHandle"></param>
+        /// <param name="ownerWin"></param>
         /// <returns></returns>
         /// <remarks>
         /// For a real plugin, this could be some check whether the analytical results of the last sample require intervention or not, before injecting the next sample.
         /// </remarks>
-        private static bool OneMoreScheduleWanted(IntPtr mainHandle)
+        private bool OneMoreScheduleWanted(Window ownerWin)
         {
-            return System.Windows.Forms.MessageBox.Show("Start one more?",
-                       "Restart loop",
-                       System.Windows.Forms.MessageBoxButtons.OKCancel,
-                       System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.OK;
+            bool oneMore = false;
+            DoOnGUIThread(() => oneMore = MessageBox.Show(ownerWin, "Start one more?",
+                "Restart loop",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question) == MessageBoxResult.Yes);
+            return oneMore;
         }
 
         /// <summary>
@@ -60,39 +77,107 @@ namespace MockPlugin.SampleList
         {
             // Use the process' main window as owner, so that our blocking
             // window can not be hidden behind the main window.
-            System.Windows.Window win = null;
-            var mainHandle = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+            ShowPluginIsInCharge win = null;
+            ButtonIcon = Properties.Resources.MockBusy;
+            ButtonCaption = "Plugin busy";
+            OnPropertyChanged(nameof(ButtonIcon));
+            OnPropertyChanged(nameof(ButtonCaption));
 
-            DoOnGUIThread(new Action(() =>
+            DoOnGUIThread(() =>
             {
+                // checking if it also works when called from the GUI thread
+                Core.ExecutionQueue.RemoveFailedPlanners();
                 win = new ShowPluginIsInCharge();
-                var wih = new System.Windows.Interop.WindowInteropHelper(win);
-                var myHandle = wih.EnsureHandle();
-                wih.Owner = mainHandle;
+                var wih = new WindowInteropHelper(win);
+                var winHandle = wih.EnsureHandle();
+                HandleAbortButton(win);
+                HandleStopButton(win);
+                Helpers.Gui.OwnMyWindow(winHandle);
                 win.Show();
-            }));
+            });
             try
             {
                 do
                 {
+                    // prevent previously failed planners from stopping us
+                    Core.ExecutionQueue.RemoveFailedPlanners();
+                    Helpers.Debug.TraceWrite($"Just FYI: Standard sample lists are at {Helpers.Config.PathToSampleLists ?? "(N/A)"} and methods are at {Helpers.Config.PathToMethods ?? "(N/A)"}, the instrument config is at {Helpers.Config.PathToInstrumentConfig}");
+                    TurnOffResets();
                     System.Threading.Thread.Sleep(5000);
-                    var ex = RunSampleList(this,
-                        new AxelSemrau.Chronos.Plugin.RunSampleListEventArgs()
+                    var ex = RunSampleList?.Invoke(this,
+                        new RunSampleListEventArgs()
                         {
                             //SampleListFile = @"C:\Users\Patrick\Documents\Chronos\MoveTest.csl"
-                            ExtendLastPlanner = true,
-                            StartAndWaitForEnd = false
+                            ExtendLastPlanner = false,
+                            StartAndWaitForEnd = false,
+                            SwitchToSchedulesView = false,
+                            RespectSelection = false
                         }
                     );
                     if (ex != null)
                     {
-                        System.Windows.Forms.MessageBox.Show("Error: " + ex.Message, "Plugin Provided Schedule",System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show(Helpers.Gui.MainWindow,$"Error: {ex.Message}", "Plugin Provided Schedule",System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Error);
                     }
-                } while (OneMoreScheduleWanted(mainHandle));
+                } while (OneMoreScheduleWanted(win));
             }
             finally
             {
-                DoOnGUIThread(new Action(() => win.Close()));
+                DoOnGUIThread(() => win.Close());
+                ButtonIcon = Properties.Resources.MockNormal;
+                ButtonCaption = NormalButtonLabel;
+                OnPropertyChanged(nameof(ButtonIcon));
+                OnPropertyChanged(nameof(ButtonCaption));
+            }
+        }
+
+        private void HandleAbortButton(ShowPluginIsInCharge win)
+        {
+            win.AbortButton.Click += (s, e) =>
+            {
+                win.AbortButton.IsEnabled = false;
+                var abortWaiter = mStopRun.Invoke(new StopRunArgs() {How = StopRunArgs.StopMode.Immediately});
+                abortWaiter.ContinueWith((t) =>
+                {
+                    try
+                    {
+                        win.AbortButton.IsEnabled = true;
+                    }
+                    catch
+                    {
+                        // suppress exceptions in case the button does not exist any more
+                    }
+                }, Helpers.Gui.GuiThreadScheduler);
+            };
+        }
+
+        private void HandleStopButton(ShowPluginIsInCharge win)
+        {
+            // This is just a quick and dirty piece of code for showing the IStopRun interface usage.
+            // 
+            win.StopButton.Click += (s, e) =>
+            {
+                win.StopButton.IsEnabled = false;
+                var stopWaiter = mStopRun.Invoke(new StopRunArgs() { How = StopRunArgs.StopMode.NoNewJobs, RestartRemainingJobs = false,StopQueue = true});
+                stopWaiter.ContinueWith((t) =>
+                {
+                    try
+                    {
+                        win.StopButton.IsEnabled = true;
+                    }
+                    catch
+                    {
+                        // suppress exceptions in case the button does not exist any more
+                    }
+                }, Helpers.Gui.GuiThreadScheduler);
+            };
+        }
+
+        private void TurnOffResets()
+        {
+            foreach (var somePAL in ConfiguredDevices.OfType<IPal3Access>())
+            {
+                somePAL.Options.AlwaysResetAfterSequence = false;
+                somePAL.Options.ResetBeforeSequence = false;
             }
         }
 
@@ -102,34 +187,65 @@ namespace MockPlugin.SampleList
         /// <param name="theAction"></param>
         private void DoOnGUIThread(Action theAction)
         {
-            var myTask = Task.Factory.StartNew(theAction,
-                             System.Threading.CancellationToken.None,
-                             TaskCreationOptions.None,
-                             mScheduler);
-            try
-            {
-                myTask.Wait();
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerExceptions[0];
-            }
+            mGuiFactory.StartNew(theAction).GetAwaiter().GetResult();
         }
 
-        public event AxelSemrau.Chronos.Plugin.RunSampleListHandler RunSampleList;
+        public event RunSampleListHandler RunSampleList;
 
         #region Sample List Access
-
-        private AxelSemrau.Chronos.Plugin.ISampleListAccessor mSampleList;
 
         /// <summary>
         /// Here we get an helper that allows us to manipulate the current sample list.
         /// </summary>
-        public AxelSemrau.Chronos.Plugin.ISampleListAccessor SampleList
+        public ISampleListAccessor SampleList
         {
-            set { mSampleList = value; }
+            set
+            {
+                // not using it in this demo plugin yet
+            }
         }
 
         #endregion Sample List Access
+
+        #region Implementation of IDirectDeviceAccess
+
+        public IEnumerable<IDevice> ConfiguredDevices { get; set; }
+
+        #endregion
+
+        public void Dispose()
+        {
+            RemotePluginService.StopService();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public IEnumerable<string> LogPaths => GetFakeLogs(GetType().FullName);
+
+        /// <summary>
+        /// Creates a few fake log files.
+        /// </summary>
+        /// <param name="creator"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> GetFakeLogs(string creator)
+        {
+            for (var i = 1; i <= 5; ++i)
+            {
+                var fakePath = System.IO.Path.GetTempFileName();
+                System.IO.File.WriteAllText(fakePath, $"Fake log entry in file {i} created at {DateTime.Now:hh:mm:ss} by {creator}");
+                yield return fakePath;
+            }
+        }
+
+        private Func<StopRunArgs, Task> mStopRun;
+        public Func<StopRunArgs, Task> StopRun
+        {
+            set => mStopRun = value;
+        }
     }
 }

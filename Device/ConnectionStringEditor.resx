@@ -117,29 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ShowingAMessageboxWithTheTextX0" xml:space="preserve">
-    <value>Zeige einen Dialog mit dem Text "{0}"</value>
-    <comment>ShowingAMessageboxWithTheTextX0 description</comment>
-  </data>
-  <data name="CoffeeCategory_Name_Coffee" xml:space="preserve">
-    <value>Kaffee</value>
-  </data>
-  <data name="BrewCoffee_GetTaskAction_Send_a_message_to_my_device" xml:space="preserve">
-    <value>Sendet eine Nachricht an das Gerät</value>
-  </data>
-  <data name="BrewCoffee_mMessage_Do_you_want_sugar_" xml:space="preserve">
-    <value>Möchten Sie Zucker?</value>
-  </data>
-  <data name="BrewFrappuccino_GetTaskAction_Brew_a_frappuccino__composition__" xml:space="preserve">
-    <value>Macht einen Frappuccino, Zusammensetzung:</value>
-  </data>
-  <data name="CompositionData_ToString_Cream___0___MuchIce___1___Decaffeinated___2___Size___3__mL" xml:space="preserve">
-    <value>Sahne: {0}; Viel Eis: {1}; Entkoffeiniert: {2}: Größe: {3} mL</value>
-  </data>
-  <data name="PretendCoffeeMachineIsBroken_Execute_The_coffee_machine_s_heater_failed_" xml:space="preserve">
-    <value>Die Heizung der Kaffeemaschine hat versagt.</value>
-  </data>
-  <data name="PretendCoffeeMachineIsBroken_GetTaskAction_Will_make_the_device_abort_the_schedule_after_a_few_seconds_" xml:space="preserve">
-    <value>Wird nach ein paar Sekunden das Gerät dazu bringen, den Lauf abzubrechen. SoftStop ist {0}.</value>
-  </data>
 </root>

@@ -133,5 +133,15 @@ namespace MockPlugin.Properties {
                 return ResourceManager.GetString("ShowingAMessageboxWithTheTextX0", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status text at {0}
+        ///for device {1} ähnelt.
+        /// </summary>
+        internal static string StatusViewControl_timer1_Tick_ {
+            get {
+                return ResourceManager.GetString("StatusViewControl_timer1_Tick_", resourceCulture);
+            }
+        }
     }
 }

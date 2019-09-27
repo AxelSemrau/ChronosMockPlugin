@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using AxelSemrau.Chronos.Plugin;
 
-namespace MockPlugin.Acquisition_Service
+namespace MockPlugin.AcquisitionService
 {
     /// <summary>
     /// Parameter class for an acquisition service that has a variable number of properties
     /// </summary>
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class DynamicAcqPars : CustomTypeDescriptor
     {
         private int mNoOfFakePars = 3;
@@ -23,7 +25,7 @@ namespace MockPlugin.Acquisition_Service
         [DynamicPropertyMaster]
         public uint NoOfFakePars
         {
-            get { return (uint)mNoOfFakePars; }
+            get => (uint)mNoOfFakePars;
             set
             {
                 mNoOfFakePars = (int)value;
@@ -128,13 +130,14 @@ namespace MockPlugin.Acquisition_Service
     /// <summary>
     /// Acquisition service for a parameter class that has a variable number of properties.
     /// </summary>
-    public class MockDynamicParAcquisitionService : IAcquisitionService<DynamicAcqPars>
+    public class MockDynamicParAcquisitionService : IAcquisitionService<DynamicAcqPars>, IStandbySupportingAcquisitionService, IHaveRunlogOutput
     {
         #region Implementation of IAcquisitionServiceBase
 
         public string Name => "MockDynamicParAcquisition";
         public bool IsAvailable => true;
-        public bool Abort { get; set; } = false;
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
+        public bool Abort { private get; set; } = false;
 
         #endregion
 
@@ -149,7 +152,22 @@ namespace MockPlugin.Acquisition_Service
         {
             // nothing
         }
+        #endregion
+        #region Implementation of IStandbySupportingAcquisitionService
+
+        public void GoToStandby()
+        {
+            WriteToRunlog?.Invoke("Mock acquisition service going to standby mode");
+        }
+        #endregion
+        #region Implementation of IHaveRunlogOutput
+
+        public event Action<string> WriteToRunlog;
 
         #endregion
+
+
+
+
     }
 }

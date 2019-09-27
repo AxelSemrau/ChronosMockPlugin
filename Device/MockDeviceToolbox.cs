@@ -23,10 +23,7 @@ namespace MockPlugin.Device
 
         public MockDevice Device
         {
-            get
-            {
-                return mDev;
-            }
+            get => mDev;
             set
             {
                 mDev = value;
@@ -47,17 +44,11 @@ namespace MockPlugin.Device
             mDev.ShowTheMessage(textBox1.Text);
         }
 
-        public Icon NavBarIcon
-        {
-            get
-            {
-                return Properties.Resources.Mock;
-            }
-        }
+        public Icon NavBarIcon => Properties.Resources.MockNormal;
 
         public bool SequenceRunning
         {
-            set { lblRunning.Text = (value ? "Sequence" : "No sequence") + " running"; }
+            set => lblRunning.Text = $@"{(value ? "Sequence" : "No sequence")} running";
         }
     }
 }

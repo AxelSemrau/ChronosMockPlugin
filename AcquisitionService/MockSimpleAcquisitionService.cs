@@ -1,31 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using AxelSemrau.Chronos.Plugin;
 
-namespace MockPlugin.Acquisition_Service
+/*!
+ * \brief Enables you to add support for a Chromatography Data System (or similar) to Chronos.
+ * An acquisition service added this way will behave like the builtin services and can be used with the Acquisition task.
+ */
+namespace MockPlugin.AcquisitionService
 {
+    /// <summary>
+    /// Example parameter set for an acquisition service.
+    /// </summary>
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
     public class SimpleParameters
     {
         public string InstrumentMethod { get; set; }
-        public int InstrumentNumber { get; set; }
+        public int InstrumentNumber { get; set; } = 1;
         public bool WaitForEmptyQueue { get; set; }
+
+        [DefaultUnit("min")]
+        public double GetReadyTimeout { get; set; }
+
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
+        public enum SampleTypeValue
+        {
+            Calibration,
+            Analysis,
+            Special
+        }
+
+        public SampleTypeValue SampleType { get; set; } = SampleTypeValue.Analysis;
 
         #region Overrides of Object
 
         public override string ToString()
         {
-            return $"Method = {InstrumentMethod}, Instrument = {InstrumentNumber}, WaitForEmptyQueue = {WaitForEmptyQueue}";
+            return $"Method = {InstrumentMethod}, Instrument = {InstrumentNumber}, WaitForEmptyQueue = {WaitForEmptyQueue}, GetReadyTimeout = {GetReadyTimeout}, SampleType = {SampleType}";
         }
 
         #endregion
     }
-    public class MockSimpleAcquisitionService : AxelSemrau.Chronos.Plugin.IAcquisitionService<SimpleParameters>, 
-        AxelSemrau.Chronos.Plugin.ITraceLogger,
+    // ReSharper disable once UnusedMember.Global
+    /// <summary>
+    /// An example acquisition service using a fixed list of parameters.
+    /// </summary>
+    /// <remarks>
+    /// For a more complex example, see MockDynamicParAcquisitionService.
+    /// </remarks>
+    public class MockSimpleAcquisitionService : IAcquisitionService<SimpleParameters>, 
+        ITraceLogger,
         IHaveConfigurator,
         IConfigurableAcquisitionService, ISequenceAwareAcquisitionService
     {
@@ -33,7 +59,7 @@ namespace MockPlugin.Acquisition_Service
 
         public string Name => "MockSimpleAcquisition";
         public bool IsAvailable => true;
-        public bool Abort { set { TraceLog($"Abort flag {(value ? "set" : "reset")}");} }
+        public bool Abort { set => TraceLog($"Abort flag {(value ? "set" : "reset")}"); }
         #endregion
 
         #region Implementation of IAcquisitionService<SimpleParameters>
@@ -59,7 +85,7 @@ namespace MockPlugin.Acquisition_Service
 
         public event EventHandler<TraceWriteEventArgs> TraceWrite;
 
-        private const string rootEl = "MockServiceConfigRootElement";
+        private const string RootEl = "MockServiceConfigRootElement";
 
         #endregion
 
@@ -77,7 +103,7 @@ namespace MockPlugin.Acquisition_Service
             {
                 ParamText = ConfigFromXml(oldConfig)
             };
-            new System.Windows.Interop.WindowInteropHelper(dlg) { Owner = owner };
+            var dummy = new System.Windows.Interop.WindowInteropHelper(dlg) { Owner = owner };
             if (dlg.ShowDialog() ?? false)
             {
                 return ConfigToXml(dlg.ParamText);
@@ -91,8 +117,8 @@ namespace MockPlugin.Acquisition_Service
 
         public string Configuration
         {
-            get { return ConfigToXml(mConfigParam); }
-            set { mConfigParam = ConfigFromXml(value); }
+            get => ConfigToXml(mConfigParam);
+            set => mConfigParam = ConfigFromXml(value);
         }
 
         private string ConfigFromXml(string value)
@@ -100,7 +126,7 @@ namespace MockPlugin.Acquisition_Service
             if (!string.IsNullOrEmpty(value))
             {
                 var el = XElement.Parse(value);
-                if (el?.Name == rootEl)
+                if (el.Name == RootEl)
                 {
                     return el.Value;
                 }
@@ -111,7 +137,7 @@ namespace MockPlugin.Acquisition_Service
 
         private string ConfigToXml(string configParam)
         {
-            var el = new XElement(rootEl) {Value = configParam};
+            var el = new XElement(RootEl) {Value = configParam};
             return el.ToString();
         }
 

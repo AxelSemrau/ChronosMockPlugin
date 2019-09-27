@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using AxelSemrau.Chronos.Plugin;
 
 namespace MockPlugin.Device
@@ -12,6 +13,7 @@ namespace MockPlugin.Device
     /// This way of interacting is only for very rare scenarios - you should use
     /// IToolbox or ITaskForDevice for device access whenever possible.
     /// </remarks>
+    // ReSharper disable once UnusedMember.Global
     public class DeviceSurveillance : IWorkWithSampleLists, IDirectDeviceAccess, ITraceLogger
     {
         #region Implementation of IWorkWithSampleLists
@@ -39,7 +41,7 @@ namespace MockPlugin.Device
                 Trace("** Start device list dump");
                 foreach (var someDev in value)
                 {
-                    Trace($"{someDev.Name} of type {someDev.GetType().FullName}");
+                    Trace($"{someDev.Name} of type {someDev.GetType().FullName}, connection state {Helpers.Devices.Single(info => info.Device == someDev).ConnectionState}");
                 }
                 Trace("** End device list dump");
             }

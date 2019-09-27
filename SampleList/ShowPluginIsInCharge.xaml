@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="120" d:DesignWidth="300" SizeToContent="WidthAndHeight" Title="Mock Plugin Sample List Generator" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+             SizeToContent="WidthAndHeight" Title="Mock Plugin Sample List Generator" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
     <StackPanel>
-        <TextBlock TextWrapping="WrapWithOverflow" FontSize="18">The plugin is in charge of sample list generation and will start them at will.</TextBlock>
+        <TextBlock Padding="5" TextWrapping="WrapWithOverflow" FontSize="18">The plugin is in charge of sample list generation and will start them at will.</TextBlock>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:FieldModifier="public" x:Name="AbortButton" Padding="10" Margin="10">Abort run</Button>
+            <Button x:FieldModifier="public" x:Name="StopButton" Padding="10" Margin="10">Stop queue</Button>
+        </StackPanel>
     </StackPanel>
 </Window>
