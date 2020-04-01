@@ -134,10 +134,12 @@ namespace MockPlugin.SampleList
         {
             win.AbortButton.Click += (s, e) =>
             {
+                // Click handler: This runs on the GUI thread
                 win.AbortButton.IsEnabled = false;
                 var abortWaiter = mStopRun.Invoke(new StopRunArgs() {How = StopRunArgs.StopMode.Immediately});
                 abortWaiter.ContinueWith((t) =>
                 {
+                    // after the background abort call has finished, continue with enabling the button on the GUI thread.
                     try
                     {
                         win.AbortButton.IsEnabled = true;

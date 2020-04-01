@@ -126,4 +126,25 @@
     <value>Status text at {0}
 for device {1}</value>
   </data>
+  <data name="DateColumn_VisibleName_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="CreamTypeColumn_ColumnHeaderMenu_Fill_down" xml:space="preserve">
+    <value>Fill down</value>
+  </data>
+  <data name="CreamTypeColumn_ColumnHeaderMenu_Cycle_through" xml:space="preserve">
+    <value>Cycle through</value>
+  </data>
+  <data name="DateColumn_ColumnHeaderMenu_Daily" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="DateColumn_ColumnHeaderMenu_Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="DateColumn_ColumnHeaderMenu_Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="DateColumn_ColumnHeaderMenu_Fill_down" xml:space="preserve">
+    <value>Fill down</value>
+  </data>
 </root>
