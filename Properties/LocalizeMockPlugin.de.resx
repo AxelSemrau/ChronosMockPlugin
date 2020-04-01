@@ -142,4 +142,13 @@
   <data name="PretendCoffeeMachineIsBroken_GetTaskAction_Will_make_the_device_abort_the_schedule_after_a_few_seconds_" xml:space="preserve">
     <value>Wird nach ein paar Sekunden das Gerät dazu bringen, den Lauf abzubrechen. SoftStop ist {0}.</value>
   </data>
+  <data name="DateColumn_VisibleName_Date" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="CreamTypeColumn_ColumnHeaderMenu_Fill_down" xml:space="preserve">
+    <value>Oberstes übernehmen</value>
+  </data>
+  <data name="CreamTypeColumn_ColumnHeaderMenu_Cycle_through" xml:space="preserve">
+    <value>Alle Werte durchlaufen</value>
+  </data>
 </root>

@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using AxelSemrau.Chronos.Plugin;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 /*!
  * \brief Enables you to add support for a Chromatography Data System (or similar) to Chronos.
@@ -53,13 +54,26 @@ namespace MockPlugin.AcquisitionService
     public class MockSimpleAcquisitionService : IAcquisitionService<SimpleParameters>, 
         ITraceLogger,
         IHaveConfigurator,
-        IConfigurableAcquisitionService, ISequenceAwareAcquisitionService
+        IConfigurableAcquisitionService,
+        ISequenceAwareAcquisitionService,
+        IHaveRunlogOutput,
+        ICommandUsingAcquisitionService<MockCommandAndParameters>
     {
         #region Implementation of IAcquisitionServiceBase
 
         public string Name => "MockSimpleAcquisition";
         public bool IsAvailable => true;
         public bool Abort { set => TraceLog($"Abort flag {(value ? "set" : "reset")}"); }
+        public void ValidateCommand(MockCommandAndParameters cmdAndPars)
+        {
+            WriteToRunlog?.Invoke($"Validating command '{cmdAndPars.SomeFakeCommand}' for instrument {cmdAndPars.InstrumentNumber}");
+        }
+
+        public void RunCommand(MockCommandAndParameters cmdAndPars)
+        {
+            WriteToRunlog?.Invoke($"Running command '{cmdAndPars.SomeFakeCommand}' for instrument {cmdAndPars.InstrumentNumber}");
+        }
+
         #endregion
 
         #region Implementation of IAcquisitionService<SimpleParameters>
@@ -156,5 +170,14 @@ namespace MockPlugin.AcquisitionService
         }
 
         #endregion
+
+        public event Action<string> WriteToRunlog;
+    }
+
+    public class MockCommandAndParameters
+    {
+        public int InstrumentNumber { get; set; }
+        public string SomeFakeCommand { get; set; } = "SayHello";
+        public override string ToString() => $"'{SomeFakeCommand}' (instrument {InstrumentNumber})";
     }
 }
