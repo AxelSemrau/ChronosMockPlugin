@@ -22,7 +22,7 @@ namespace WixSharpSetup.Dialogs
 
 		void ExitDialog_Load( object sender, System.EventArgs e )
 		{
-			image.Image = MsiRuntime.Session.GetEmbeddedBitmap( "WixUI_Bmp_Dialog" );
+			image.Image = MsiRuntime.MsiSession.GetEmbeddedBitmap( "WixUI_Bmp_Dialog" );
 			if( Shell.UserInterrupted || Shell.ErrorDetected )
 			{
 				description.Text = "[UserExitDescription1]";

@@ -71,7 +71,7 @@ namespace WixSharpSetup.Dialogs
 
 		void SetupTypeDialog_Load( object sender, System.EventArgs e )
 		{
-			banner.Image = MsiRuntime.Session.GetEmbeddedBitmap( "WixUI_Bmp_Banner" );
+			banner.Image = MsiRuntime.MsiSession.GetEmbeddedBitmap( "WixUI_Bmp_Banner" );
 
 			ResetLayout();
 		}

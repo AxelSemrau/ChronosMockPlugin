@@ -21,7 +21,7 @@ namespace WixSharpSetup.Dialogs
 
 		void WelcomeDialog_Load( object sender, EventArgs e )
 		{
-			image.Image = MsiRuntime.Session.GetEmbeddedBitmap( "WixUI_Bmp_Dialog" );
+			image.Image = MsiRuntime.MsiSession.GetEmbeddedBitmap( "WixUI_Bmp_Dialog" );
 
 			ResetLayout();
 		}

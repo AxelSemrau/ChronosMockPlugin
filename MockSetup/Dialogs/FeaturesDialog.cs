@@ -54,7 +54,7 @@ namespace WixSharpSetup.Dialogs
 
 			ReadOnlyTreeNode.Behavior.AttachTo( featuresTree, drawTextOnly );
 
-			banner.Image = MsiRuntime.Session.GetEmbeddedBitmap( "WixUI_Bmp_Banner" );
+			banner.Image = MsiRuntime.MsiSession.GetEmbeddedBitmap( "WixUI_Bmp_Banner" );
 			BuildFeaturesHierarchy();
 
 			ResetLayout();
@@ -95,7 +95,7 @@ namespace WixSharpSetup.Dialogs
 			//Thus instead of using FeatureInfo just collect the names and query database for the rest of the properties.
 			string[] names = MsiRuntime.Session.Features.Select( x => x.Name ).ToArray();
 
-			features = names.Select( name => new FeatureItem( MsiRuntime.Session, name ) ).ToArray();
+			features = names.Select( name => new FeatureItem( MsiRuntime.MsiSession, name ) ).ToArray();
 
 			//build the hierarchy tree
 			var rootItems = features.Where( x => x.ParentName.IsEmpty() ).ToArray();
