@@ -10,14 +10,14 @@ namespace WixSharpSetup
 	internal class Program
 	{
 		/// <summary>
-		///     Example Setup for an Chronos Plugin, written with the NuGet-Package WixSharp
+		///     Example Setup for a Chronos Plugin, written with the NuGet-Package WixSharp
 		///     <see cref="https://github.com/oleg-shilo/wixsharp" />.
 		///     Requirement is the WixToolSet <see cref="http://wixtoolset.org/releases/" />
 		/// </summary>
 		private static void Main()
 		{
 #if DEBUG
-            System.Diagnostics.Debugger.Launch();
+          //  System.Diagnostics.Debugger.Launch();
 #endif
 			var project = new ManagedProject("MockPlugin", //Name of the Plugin
 				new Dir(@"%ProgramFiles%\Chronos\Plugins\MockPlugin", //Install-Dir to the Chronos-Plugin Folder

@@ -23,3 +23,7 @@
 /Plugin/obj/Debug
 /Plugin/obj/Release
 /RemoteAccessTester/obj/Release
+/Setup/bin
+/Setup/obj
+/Setup/wix
+/Setup/MockPlugin-Setup.msi
