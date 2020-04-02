@@ -24,8 +24,8 @@ namespace WixSharpSetup.Dialogs
 
 		void LicenceDialog_Load( object sender, EventArgs e )
 		{
-			banner.Image = MsiRuntime.Session.GetEmbeddedBitmap( "WixUI_Bmp_Banner" );
-			agreement.Rtf = MsiRuntime.Session.GetEmbeddedString( "WixSharp_LicenceFile" );
+			banner.Image = MsiRuntime.MsiSession.GetEmbeddedBitmap( "WixUI_Bmp_Banner" );
+			agreement.Rtf = MsiRuntime.MsiSession.GetEmbeddedString( "WixSharp_LicenceFile" );
 			accepted.Checked = MsiRuntime.Session["LastLicenceAcceptedChecked"] == "True";
 
 			ResetLayout();

@@ -10,12 +10,15 @@ namespace WixSharpSetup
 	internal class Program
 	{
 		/// <summary>
-		///     Example Setup for an Chronos Plugin, written with the NuGet-Package WixSharp
+		///     Example Setup for a Chronos Plugin, written with the NuGet-Package WixSharp
 		///     <see cref="https://github.com/oleg-shilo/wixsharp" />.
 		///     Requirement is the WixToolSet <see cref="http://wixtoolset.org/releases/" />
 		/// </summary>
 		private static void Main()
 		{
+#if DEBUG
+          //  System.Diagnostics.Debugger.Launch();
+#endif
 			var project = new ManagedProject("MockPlugin", //Name of the Plugin
 				new Dir(@"%ProgramFiles%\Chronos\Plugins\MockPlugin", //Install-Dir to the Chronos-Plugin Folder
 					new File("MockPlugin.dll"),
@@ -30,8 +33,8 @@ namespace WixSharpSetup
 			);
 
 			project.GUID = new Guid("6fe30b47-2577-43ad-9095-1861ba25889b");
-
-			project.SourceBaseDir = @"..\bin\Debug"; //Plugin-Projekt Output Path
+			// Since we have a reference to mockplugin.dll added, it is copied to our current working directory.
+            project.SourceBaseDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 			//project.OutDir = "<output dir path>";	 //Specific Output Path from the Setup
 
 			#region Setup Infos
@@ -42,8 +45,8 @@ namespace WixSharpSetup
 			project.ControlPanelInfo.Contact = "Company name";
 			project.ControlPanelInfo.InstallLocation = "[INSTALLDIR]";
 
-			project.BannerImage = @"..\..\MockSetup\Images\Banner.png";
-			project.BackgroundImage = @"..\..\MockSetup\Images\Background.png";
+			project.BannerImage = @"Images\Banner.png";
+			project.BackgroundImage = @"Images\Background.png";
 
 			project.Version =
 				Tasks.GetVersionFromFile(Path.Combine(project.SourceBaseDir,
