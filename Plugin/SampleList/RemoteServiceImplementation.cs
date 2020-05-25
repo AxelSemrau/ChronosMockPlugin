@@ -12,6 +12,9 @@ namespace MockPlugin.SampleList
     /// <remarks>
     /// This example uses WCF to show how you can trigger actions within the plugin from external programs.
     /// See RemoteAccessTester.MessageTesterForm for the client side.
+    /// Please note that WCF will be discontinued by Microsoft, the server components will not be part of .Net Core in the future.
+    /// So, while this is a working example for current Chronos releases, you should maybe not base a new project on this
+    /// method of interprocess communication, but switch to something else like gRPC or an ASP.net WebAPI.
     /// </remarks>
     public class RemotePluginService : IMockPlugin
     {

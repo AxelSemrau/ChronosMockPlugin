@@ -27,3 +27,5 @@
 /Setup/obj
 /Setup/wix
 /Setup/MockPlugin-Setup.msi
+/Plugin/RemoteAccessTester/bin/Debug
+/Plugin/RemoteAccessTester/obj/Debug

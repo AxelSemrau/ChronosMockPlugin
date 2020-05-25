@@ -7,6 +7,8 @@ using System.Xml.Serialization;
 using AxelSemrau.Chronos.Plugin;
 using MockPlugin.Device;
 using MockPlugin.Properties;
+using MockPlugin.SampleListColumns;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
@@ -118,6 +120,7 @@ namespace MockPlugin.Tasks
         /// <summary>
         /// Enum properties result in nice drop-down lists.
         /// </summary>
+        [TypeConverter(typeof(CreamTypeConverter))]
         public enum CreamType
         {
             Normal,

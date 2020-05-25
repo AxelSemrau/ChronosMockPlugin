@@ -174,6 +174,9 @@ namespace MockPlugin.AcquisitionService
         public event Action<string> WriteToRunlog;
     }
 
+    /// <summary>
+    /// Example definition of a command and its parameters that can be called for an AxelSemrau.Chronos.Plugin.ICommandUsingAcquisitionService.
+    /// </summary>
     public class MockCommandAndParameters
     {
         public int InstrumentNumber { get; set; }

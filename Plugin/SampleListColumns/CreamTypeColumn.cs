@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,6 @@ namespace MockPlugin.SampleListColumns
     /// <summary>
     /// Simple case: Enum based column. Possible values are given in the StandardItems, custom editor is not used.
     /// </summary>
-    [TypeConverter(typeof(CreamTypeConverter))]
     // ReSharper disable once UnusedType.Global
     public class CreamTypeColumn : IColumnTypeDefinition
     {
@@ -89,6 +89,19 @@ namespace MockPlugin.SampleListColumns
         /// </summary>
         public CreamTypeConverter() : base(typeof(BrewFrappuccino.CreamType))
         {
+        }
+
+        /// <summary>
+        /// The actual conversion work string->object is done here.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="culture"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <remarks>The base class implementation is good enough for us.</remarks>
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            return base.ConvertFrom(context, culture, value);
         }
     }
 
