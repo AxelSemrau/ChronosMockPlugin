@@ -17,15 +17,15 @@ namespace MockPlugin.Device
 
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
-            var oldPars = (value as CoffeMakerParams)?.Clone();
+            var myPars = (value as CoffeMakerParams)?.Clone();
             var editorService = provider?.GetService(typeof(IWindowsFormsEditorService)) as IWindowsFormsEditorService;
-            var theForm = new CoffeeMakerParamsUI() {Parameters = oldPars};
+            var theForm = new CoffeeMakerParamsUI() {Parameters = myPars};
             if (editorService?.ShowDialog(theForm) == DialogResult.OK)
             {
                 return theForm.Parameters;
             }
-
-            return oldPars;
+            // if the dialog was cancelled, return the old parameter set.
+            return value;
         }
 
         #endregion
