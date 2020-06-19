@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Method>
+  <Name />
+  <Description />
+  <FormatVersion>1</FormatVersion>
+  <Columns show="True">
+    <column name="SampleID" token="%ID%" var="String" visible="True" editable="True" sortable="False" />
+    <column name="Comment" token="%COMMENT%" var="String" visible="True" editable="True" sortable="False" />
+    <column name="Concentration" token="%CONC%" var="Double" visible="True" editable="True" sortable="False" value="0" />
+  </Columns>
+  <TaskVisibility showall="True">
+    <WriteToLogfile>
+      <RespectRuntime>False</RespectRuntime>
+      <ScheduledAfter>False</ScheduledAfter>
+      <IncludeTimeStamp>False</IncludeTimeStamp>
+      <Append>False</Append>
+    </WriteToLogfile>
+  </TaskVisibility>
+  <Tasks>
+    <WriteToLogfile>
+      <Runtime>1</Runtime>
+      <Text>Sample %ID%, Comment: "%COMMENT%", Concentration: %CONC%</Text>
+    </WriteToLogfile>
+  </Tasks>
+  <Hash>-1860822911</Hash>
+</Method>

@@ -29,3 +29,7 @@
 /Setup/MockPlugin-Setup.msi
 /Plugin/RemoteAccessTester/bin/Debug
 /Plugin/RemoteAccessTester/obj/Debug
+/Examples/CustomCsvImporter/obj/Debug
+/Examples/CustomCsvImporterTests/bin/Debug
+/Examples/CustomCsvImporterTests/obj/Debug
+/TestResults
