@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing.Design;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AxelSemrau.Chronos.Plugin;
 using AxelSemrau.Chronos.Plugin.Columns;
 using MockPlugin.Properties;

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Navigation;
 using AxelSemrau.Chronos.Plugin;
 // ReSharper disable UnusedMember.Global
 
@@ -42,8 +38,16 @@ namespace MockPlugin.Device
                 mAllParts.Add(new TrainPart(this, TrainPartType.PassengerCar) {Num = i+57});
             }
         }
+        
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        public event Action<ConnectionState> ConnectionStateChanged
+        {
+            add {  }
+            remove {  }
+        }
 
-        public event Action<ConnectionState> ConnectionStateChanged;
         public IReadOnlyCollection<IDevice> Parts => mAllParts;
 
         internal void ClosedSomeDoor()
@@ -139,7 +143,15 @@ namespace MockPlugin.Device
             }
         }
 
-        public event Action<ConnectionState> ConnectionStateChanged;
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        public event Action<ConnectionState> ConnectionStateChanged
+        {
+            add {  }
+            remove {  }
+        }
+
         public event Action<string> SetStatusMessage;
     }
 }

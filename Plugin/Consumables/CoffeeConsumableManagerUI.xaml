@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="MockPlugin.Consumables.CoffeeConsumableManagerUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MockPlugin.Consumables"
+             mc:Ignorable="d"
+             d:DesignWidth="400" d:DesignHeight="400"
+             d:DataContext="{d:DesignInstance Type=local:CoffeeConsumableViewModel, IsDesignTimeCreatable=True}"
+>
+    <UserControl.Resources>
+        <BitmapImage x:Key="CoffeeMachineBitmapImage" UriSource="pack://application:,,,/MockPlugin;component/Consumables/CoffeeMachine.png" />
+    </UserControl.Resources>
+    <StackPanel Orientation="Vertical" Margin="5">
+        <Grid.IsSharedSizeScope>True</Grid.IsSharedSizeScope>
+        <TextBlock FontSize="18">Coffee Machines' Consumables</TextBlock>
+        <ItemsControl ItemsSource="{Binding Ingredients}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:IngredientsForDevice}">
+                    <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding DeviceName, StringFormat={}Device: {0}}" Margin="3" FontSize="14" />
+                    <ItemsControl Margin="5,0,0,0" ItemsSource="{Binding Ingredients}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type local:CoffeeIngredient}">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding ConsumableName}" Margin="3"/>
+                                    <ItemsControl Margin="5,0,0,0" ItemsSource="{Binding Puddles}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type local:CoffeeIngredientContainer}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition SharedSizeGroup="A" Width="Auto" />
+                                                        <ColumnDefinition SharedSizeGroup="B"  Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding ContainerName, StringFormat={}{0}: }"/>
+                                                    <TextBlock Grid.Column="1" Margin="5,0,0,0">
+                                                        <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} / {1}">
+                                                                    <Binding Path="CurrentLevel" />
+                                                                    <Binding Path="MaxLevel"></Binding>
+                                                                </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>

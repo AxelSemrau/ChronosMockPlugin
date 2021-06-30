@@ -1,0 +1,214 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.8": {
+      "JetBrains.Annotations/2020.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/net20/JetBrains.Annotations.dll": {}
+        },
+        "runtime": {
+          "lib/net20/JetBrains.Annotations.dll": {}
+        }
+      },
+      "UtilPack.NuGet.MSBuild/2.9.1": {
+        "type": "package",
+        "build": {
+          "build/UtilPack.NuGet.MSBuild.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/UtilPack.NuGet.MSBuild.props": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.8/win": {
+      "JetBrains.Annotations/2020.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/net20/JetBrains.Annotations.dll": {}
+        },
+        "runtime": {
+          "lib/net20/JetBrains.Annotations.dll": {}
+        }
+      },
+      "UtilPack.NuGet.MSBuild/2.9.1": {
+        "type": "package",
+        "build": {
+          "build/UtilPack.NuGet.MSBuild.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/UtilPack.NuGet.MSBuild.props": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.8/win-x64": {
+      "JetBrains.Annotations/2020.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/net20/JetBrains.Annotations.dll": {}
+        },
+        "runtime": {
+          "lib/net20/JetBrains.Annotations.dll": {}
+        }
+      },
+      "UtilPack.NuGet.MSBuild/2.9.1": {
+        "type": "package",
+        "build": {
+          "build/UtilPack.NuGet.MSBuild.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/UtilPack.NuGet.MSBuild.props": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.8/win-x86": {
+      "JetBrains.Annotations/2020.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/net20/JetBrains.Annotations.dll": {}
+        },
+        "runtime": {
+          "lib/net20/JetBrains.Annotations.dll": {}
+        }
+      },
+      "UtilPack.NuGet.MSBuild/2.9.1": {
+        "type": "package",
+        "build": {
+          "build/UtilPack.NuGet.MSBuild.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/UtilPack.NuGet.MSBuild.props": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "JetBrains.Annotations/2020.3.0": {
+      "sha512": "FnX06vtxuoZnhZdR6UHt5kJ7HUC/syODfGLnhPDn1x5sXvvepNyCl4jMtPUzJfsPWh7q0Jo+AIYz5xaVbbyikA==",
+      "type": "package",
+      "path": "jetbrains.annotations/2020.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "jetbrains.annotations.2020.3.0.nupkg.sha512",
+        "jetbrains.annotations.nuspec",
+        "lib/net20/JetBrains.Annotations.dll",
+        "lib/net20/JetBrains.Annotations.xml",
+        "lib/netstandard1.0/JetBrains.Annotations.deps.json",
+        "lib/netstandard1.0/JetBrains.Annotations.dll",
+        "lib/netstandard1.0/JetBrains.Annotations.xml",
+        "lib/netstandard2.0/JetBrains.Annotations.deps.json",
+        "lib/netstandard2.0/JetBrains.Annotations.dll",
+        "lib/netstandard2.0/JetBrains.Annotations.xml",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/JetBrains.Annotations.dll",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/JetBrains.Annotations.xml"
+      ]
+    },
+    "UtilPack.NuGet.MSBuild/2.9.1": {
+      "sha512": "1IOor3irB2Glg5GI036ZgYRr0I4uKBfSlDpyqhDIpeuY8K/aBWeY8bkhVe2Vm6kvjoJVStXyyq8mD4GHz/J8TQ==",
+      "type": "package",
+      "path": "utilpack.nuget.msbuild/2.9.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/UtilPack.NuGet.MSBuild.props",
+        "build/net46/Newtonsoft.Json.dll",
+        "build/net46/NuGet.Commands.dll",
+        "build/net46/NuGet.Common.dll",
+        "build/net46/NuGet.Configuration.dll",
+        "build/net46/NuGet.Credentials.dll",
+        "build/net46/NuGet.DependencyResolver.Core.dll",
+        "build/net46/NuGet.Frameworks.dll",
+        "build/net46/NuGet.LibraryModel.dll",
+        "build/net46/NuGet.Packaging.Core.dll",
+        "build/net46/NuGet.Packaging.dll",
+        "build/net46/NuGet.ProjectModel.dll",
+        "build/net46/NuGet.Protocol.dll",
+        "build/net46/NuGet.Versioning.dll",
+        "build/net46/System.ValueTuple.dll",
+        "build/net46/UtilPack.NuGet.MSBuild.dll",
+        "build/netcoreapp1.1/UtilPack.NuGet.MSBuild.NuGet.4.3.0.dll",
+        "build/netcoreapp1.1/UtilPack.NuGet.MSBuild.NuGet.4.4.0.dll",
+        "build/netcoreapp1.1/UtilPack.NuGet.MSBuild.NuGet.4.5.0.dll",
+        "build/netcoreapp1.1/UtilPack.NuGet.MSBuild.NuGet.4.6.0.dll",
+        "build/netcoreapp1.1/UtilPack.NuGet.MSBuild.NuGet.4.7.0.dll",
+        "build/netcoreapp1.1/UtilPack.NuGet.MSBuild.NuGet.4.8.0.dll",
+        "build/netcoreapp1.1/UtilPack.NuGet.MSBuild.NuGet.4.9.0.dll",
+        "build/netcoreapp1.1/UtilPack.NuGet.MSBuild.dll",
+        "buildMultiTargeting/UtilPack.NuGet.MSBuild.props",
+        "utilpack.nuget.msbuild.2.9.1.nupkg.sha512",
+        "utilpack.nuget.msbuild.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.8": [
+      "JetBrains.Annotations >= 2020.3.0",
+      "UtilPack.NuGet.MSBuild >= 2.9.1"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\kursa\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\kursa\\source\\repos\\ChronosMockPlugin_AS\\Plugin\\RemoteAccessTester\\RemoteAccessTester.csproj",
+      "projectName": "RemoteAccessTester",
+      "projectPath": "C:\\Users\\kursa\\source\\repos\\ChronosMockPlugin_AS\\Plugin\\RemoteAccessTester\\RemoteAccessTester.csproj",
+      "packagesPath": "C:\\Users\\kursa\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\kursa\\source\\repos\\ChronosMockPlugin_AS\\Plugin\\RemoteAccessTester\\obj\\",
+      "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\kursa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net48"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {},
+        "https://devops.axelsemrau.de/Chromatographie/_packaging/ChromaGet/nuget/v3/index.json": {}
+      },
+      "frameworks": {
+        "net48": {
+          "projectReferences": {}
+        }
+      }
+    },
+    "frameworks": {
+      "net48": {
+        "dependencies": {
+          "JetBrains.Annotations": {
+            "target": "Package",
+            "version": "[2020.3.0, )"
+          },
+          "UtilPack.NuGet.MSBuild": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[2.9.1, )"
+          }
+        }
+      }
+    },
+    "runtimes": {
+      "win": {
+        "#import": []
+      },
+      "win-x64": {
+        "#import": []
+      },
+      "win-x86": {
+        "#import": []
+      }
+    }
+  }
+}

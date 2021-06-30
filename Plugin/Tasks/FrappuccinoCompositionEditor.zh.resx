@@ -117,4 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="rbLowFat.Text" xml:space="preserve">
+    <value>低脂</value>
+  </data>
+  <data name="rbVeganCream.Text" xml:space="preserve">
+    <value>素食主义者</value>
+  </data>
+  <data name="rbRegularCream.Text" xml:space="preserve">
+    <value>常规的</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>奶油</value>
+  </data>
+  <data name="rbLotsOfIce.Text" xml:space="preserve">
+    <value>多点，拜托！</value>
+  </data>
+  <data name="rbLowIce.Text" xml:space="preserve">
+    <value>不要太多</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>冰</value>
+  </data>
+  <data name="chkCaffeine.Text" xml:space="preserve">
+    <value>咖啡因</value>
+  </data>
+  <data name="cboSize.Items" xml:space="preserve">
+    <value>小</value>
+  </data>
+  <data name="cboSize.Items1" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="cboSize.Items2" xml:space="preserve">
+    <value>大</value>
+  </data>
+  <data name="btnOK.Text" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>对设备：</value>
+  </data>
+  <data name="lblDevName.Text" xml:space="preserve">
+    <value>（未设置）</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>你觉得你的星冰乐怎么样？</value>
+  </data>
 </root>

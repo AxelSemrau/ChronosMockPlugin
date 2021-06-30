@@ -1,0 +1,67 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\kursa\\source\\repos\\ChronosMockPlugin_AS\\Plugin\\RemoteAccessTester\\RemoteAccessTester.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\kursa\\source\\repos\\ChronosMockPlugin_AS\\Plugin\\RemoteAccessTester\\RemoteAccessTester.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\kursa\\source\\repos\\ChronosMockPlugin_AS\\Plugin\\RemoteAccessTester\\RemoteAccessTester.csproj",
+        "projectName": "RemoteAccessTester",
+        "projectPath": "C:\\Users\\kursa\\source\\repos\\ChronosMockPlugin_AS\\Plugin\\RemoteAccessTester\\RemoteAccessTester.csproj",
+        "packagesPath": "C:\\Users\\kursa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\kursa\\source\\repos\\ChronosMockPlugin_AS\\Plugin\\RemoteAccessTester\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\kursa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://devops.axelsemrau.de/Chromatographie/_packaging/ChromaGet/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {
+          "dependencies": {
+            "JetBrains.Annotations": {
+              "target": "Package",
+              "version": "[2020.3.0, )"
+            },
+            "UtilPack.NuGet.MSBuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.9.1, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

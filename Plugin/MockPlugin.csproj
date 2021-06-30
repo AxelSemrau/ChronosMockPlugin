@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MockPlugin</RootNamespace>
     <AssemblyName>MockPlugin</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -28,13 +28,12 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\Program Files %28x86%29\Chronos\Plugins\MockPlugin\</OutputPath>
+    <OutputPath>..\..\Zaphod\bin\x86\Debug\Plugins\MockPlugin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>default</LangVersion>
-    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,13 +46,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Program Files %28x86%29\Chronos\Plugins\MockPlugin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <LangVersion>default</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -63,12 +61,14 @@
     <PlatformTarget>x86</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Chronos">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Chronos\Chronos.exe</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Chronos\Chronos.exe</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="PalPlusDriverBase">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Chronos\3rdParty\PalPlusDriverBase.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -89,14 +89,19 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\RemoteAccessTester\RemoteInterface.cs">
-      <Link>SampleList\RemoteInterface.cs</Link>
-    </Compile>
     <Compile Include="AcquisitionService\ConfigDialog.xaml.cs">
       <DependentUpon>ConfigDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="AcquisitionService\MockSimpleAcquisitionService.cs" />
     <Compile Include="AcquisitionService\MockDynamicParAcquisitionService.cs" />
+    <Compile Include="Consumables\CoffeeConsumableManagerUI.xaml.cs">
+      <DependentUpon>CoffeeConsumableManagerUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Consumables\CoffeeConsumableViewModel.cs" />
+    <Compile Include="Consumables\CoffeeIngredient.cs" />
+    <Compile Include="Consumables\CoffeeIngredientContainer.cs" />
+    <Compile Include="Consumables\CoffeeConsumableManager.cs" />
+    <Compile Include="Consumables\MockConsumablesForCoffeeMaker.cs" />
     <Compile Include="Device\CoffeeMakerParamsEditor.cs" />
     <Compile Include="Device\CoffeeMakerParamsUI.cs">
       <SubType>Form</SubType>
@@ -117,6 +122,11 @@
       <DependentUpon>EditMachineParams.xaml</DependentUpon>
     </Compile>
     <Compile Include="Device\Train.cs" />
+    <Compile Include="Misc\LicenseCheck.cs" />
+    <Compile Include="Misc\NoLicenseNeededExplanation.xaml.cs">
+      <DependentUpon>NoLicenseNeededExplanation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SampleListColumns\CoffeeTypeColumn.cs" />
     <Compile Include="SampleListColumns\ColumnHeaderMenu.cs" />
     <Compile Include="SampleListColumns\CreamTypeColumn.cs" />
     <Compile Include="SampleListColumns\DateColumn.cs" />
@@ -152,6 +162,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LocalizeMockPlugin.resx</DependentUpon>
     </Compile>
+    <Compile Include="RemoteAccessTester\RemoteInterface.cs" />
     <Compile Include="SampleList\RemoteServiceImplementation.cs" />
     <Compile Include="SampleList\ShowPluginIsInCharge.xaml.cs">
       <DependentUpon>ShowPluginIsInCharge.xaml</DependentUpon>
@@ -173,6 +184,7 @@
     <EmbeddedResource Include="Device\ConnectionStringEditor.resx">
       <DependentUpon>ConnectionStringEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\LocalizeMockPlugin.zh.resx" />
     <EmbeddedResource Include="Tasks\FrappuccinoCompositionEditor.de.resx">
       <DependentUpon>FrappuccinoCompositionEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -194,8 +206,12 @@
     <EmbeddedResource Include="Misc\StatusViewControl.resx">
       <DependentUpon>StatusViewControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\FrappuccinoCompositionEditor.zh.resx">
+      <DependentUpon>FrappuccinoCompositionEditor.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Consumables\CoffeeMachine.png" />
     <Content Include="Properties\MockBusy.ico" />
     <Content Include="Properties\MockNormal.ico" />
   </ItemGroup>
@@ -204,7 +220,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Consumables\CoffeeConsumableManagerUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Device\EditMachineParams.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Misc\NoLicenseNeededExplanation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,14 +238,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <PackageReference Include="UtilPack.NuGet.MSBuild">
+      <Version>2.9.1</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using AxelSemrau.Chronos.Plugin;
@@ -57,12 +58,40 @@ namespace MockPlugin.AcquisitionService
         IConfigurableAcquisitionService,
         ISequenceAwareAcquisitionService,
         IHaveRunlogOutput,
-        ICommandUsingAcquisitionService<MockCommandAndParameters>
+        ICommandUsingAcquisitionService<MockCommandAndParameters>,
+        IPerseveringAcquisitionService
     {
         #region Implementation of IAcquisitionServiceBase
 
         public string Name => "MockSimpleAcquisition";
-        public bool IsAvailable => true;
+
+        /// <summary>
+        /// We use this timer to pretend the service will only become available after a certain amount of time.
+        /// </summary>
+        private readonly Stopwatch mAvailabilityTimer = Stopwatch.StartNew();
+
+        /// <summary>
+        /// Allows us to bypass the delayed availability for test purposes.
+        /// </summary>
+        public static bool ImmediatelyAvailable { get; set; }
+
+        /// <summary>
+        /// See above - we pretend the service becomes available only after some time.
+        /// </summary>
+        public bool IsAvailable
+        {
+            get
+            {
+                if (ImmediatelyAvailable || mAvailabilityTimer.Elapsed > TimeSpan.FromMinutes(2))
+                {
+                    mAvailabilityTimer.Stop();
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
         public bool Abort { set => TraceLog($"Abort flag {(value ? "set" : "reset")}"); }
         public void ValidateCommand(MockCommandAndParameters cmdAndPars)
         {
@@ -172,6 +201,13 @@ namespace MockPlugin.AcquisitionService
         #endregion
 
         public event Action<string> WriteToRunlog;
+
+        #region Implementation of IPreseveringAcquisitionService
+
+        public TimeSpan RetryInterval => TimeSpan.FromSeconds(30);
+
+        #endregion
+
     }
 
     /// <summary>

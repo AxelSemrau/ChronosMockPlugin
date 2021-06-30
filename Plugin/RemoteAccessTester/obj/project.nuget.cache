@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "ezNQE/UwyNhoKujWU9IX3Yy+UBGV/yCGN2gD2NJ0ABnu4y3Jnue9v9l/dC0+cjchLgheL4EKMWHRQsyoCtjICA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\kursa\\source\\repos\\ChronosMockPlugin_AS\\Plugin\\RemoteAccessTester\\RemoteAccessTester.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kursa\\.nuget\\packages\\jetbrains.annotations\\2020.3.0\\jetbrains.annotations.2020.3.0.nupkg.sha512",
+    "C:\\Users\\kursa\\.nuget\\packages\\utilpack.nuget.msbuild\\2.9.1\\utilpack.nuget.msbuild.2.9.1.nupkg.sha512"
+  ],
+  "logs": []
+}

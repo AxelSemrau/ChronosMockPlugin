@@ -5,6 +5,9 @@ using System.Linq;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
 using AxelSemrau.Chronos.Plugin;
+using AxelSemrau.Chronos.Plugin.Consumables;
+using Ctc.Palplus.Integration.Driver.Entities;
+using MockPlugin.Consumables;
 using MockPlugin.Device;
 using MockPlugin.Properties;
 using MockPlugin.SampleListColumns;
@@ -20,7 +23,7 @@ namespace MockPlugin.Tasks
     /// <summary>
     /// Base class for our example, just contains some empty default implementations and a check for the right device type.
     /// </summary>
-    public abstract class CoffeeMachineBaseTask
+    public abstract class CoffeeMachineBaseTask : IConsumer
     {
         protected MockDevice mDevice;
 
@@ -47,13 +50,18 @@ namespace MockPlugin.Tasks
             CheckForCoffeeMachine(yourDevice);
         }
 
-        public void PreValidate()
+        public virtual void PreValidate()
         {
         }
 
-        public void PostValidate()
+        public virtual void PostValidate()
         {
         }
+
+        public abstract void Execute();
+        public abstract string GetTaskAction();
+
+        public IConsumableManipulator Consumables { get; set; }
     }
 
     /// <summary>
@@ -85,16 +93,30 @@ namespace MockPlugin.Tasks
         /// <summary>
         /// Do something with our device: The resulting message box is displayed by the device.
         /// </summary>
-        public void Execute()
+        public override void Execute()
         {
             mDevice.ShowTheMessage(Message);
+            RegisterCoffeeConsumption();
+        }
+
+        public override void PostValidate()
+        {
+            RegisterCoffeeConsumption();
+        }
+
+        /// <summary>
+        /// Inform the consumables tracker of the needed coffee amount.
+        /// </summary>
+        private void RegisterCoffeeConsumption()
+        {
+            Consumables.ModifyLevel(CoffeeConsumableManager.GetLocationIdentifier(mDevice, MockConsumablesForCoffeeMakerDevice.Coffee.Name), new Quantity(-7, Units.Gram));
         }
 
         /// <summary>
         /// Show this task's action in the timetable.
         /// </summary>
         /// <returns></returns>
-        public string GetTaskAction()
+        public override string GetTaskAction()
         {
             return LocalizeMockPlugin.BrewCoffee_GetTaskAction_Send_a_message_to_my_device;
         }
@@ -240,13 +262,13 @@ namespace MockPlugin.Tasks
             }
         }
 
-        public string GetTaskAction()
+        public override string GetTaskAction()
         {
             return LocalizeMockPlugin.BrewFrappuccino_GetTaskAction_Brew_a_frappuccino__composition__ + Composition;
         }
 
 
-        [DefaultUnit("mL")]
+        [DefaultUnit(Units.MilliLiter)]
         public uint Volume
         {
             get => mComposition.Volume;
@@ -277,9 +299,43 @@ namespace MockPlugin.Tasks
         /// <summary>
         /// Send the recipe to our device.
         /// </summary>
-        public void Execute()
+        public override void Execute()
         {
             mDevice.BrewFrappuccino(Composition);
+            RegisterConsumption(Composition);
+        }
+
+        public override void PostValidate()
+        {
+            RegisterConsumption(Composition);
+        }
+
+        /// <summary>
+        /// Register consumption of coffee / cream with the consumables tracker.
+        /// </summary>
+        /// <param name="composition"></param>
+        private void RegisterConsumption(CompositionData composition)
+        {
+            var sizeFactor = composition.Volume / 125.0;
+            Consumables.ModifyLevel(CoffeeConsumableManager.GetLocationIdentifier(mDevice,MockConsumablesForCoffeeMakerDevice.Coffee.Name),new Quantity(-7*sizeFactor, Units.Gram));
+            string creamName;
+            switch (composition.Cream)
+            {
+                case CreamType.LowFat:
+                    // intentionally picked name of a component that is not tracked. Results just in a log entry, not visible on tracker's page.
+                    creamName = "Low Fat Milk";
+                    break;
+                case CreamType.Normal:
+                    creamName = MockConsumablesForCoffeeMakerDevice.Milk.Name;
+                    break;
+                case CreamType.Vegan:
+                    creamName = MockConsumablesForCoffeeMakerDevice.VeganCream.Name;
+                    break;
+                default:
+                    creamName = "";
+                    break;
+            }
+            Consumables.ModifyLevel(CoffeeConsumableManager.GetLocationIdentifier(mDevice, creamName),new Quantity(-10*sizeFactor,Units.MilliLiter));
         }
 
         /// <summary>
@@ -355,16 +411,17 @@ namespace MockPlugin.Tasks
     /// This task will trigger a timer in our device which will make it complain about an error situation, even if at that time no task is trying to use it.
     /// </summary>
     [CoffeeCategory(3)]
+    // ReSharper disable once UnusedType.Global
     public class PretendCoffeeMachineIsBroken : CoffeeMachineBaseTask, ITaskForDevice
     {
         public bool SoftStop { get; set; }
-        public void Execute()
+        public override void Execute()
         {
             mDevice.TriggerAbort(LocalizeMockPlugin
                     .PretendCoffeeMachineIsBroken_Execute_The_coffee_machine_s_heater_failed_,SoftStop);
         }
 
-        public string GetTaskAction()
+        public override string GetTaskAction()
         {
             return String.Format(LocalizeMockPlugin.PretendCoffeeMachineIsBroken_GetTaskAction_Will_make_the_device_abort_the_schedule_after_a_few_seconds_,SoftStop);
         }
