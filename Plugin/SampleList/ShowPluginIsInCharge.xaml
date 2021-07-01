@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:plugin="clr-namespace:AxelSemrau.Chronos.Plugin;assembly=ChronosPluginInterfaces"
+             xmlns:plugin="clr-namespace:AxelSemrau.Chronos.Plugin;assembly=Chronos"
              mc:Ignorable="d"
              SizeToContent="WidthAndHeight" Title="Mock Plugin Sample List Generator" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
     <StackPanel>
@@ -11,7 +11,7 @@
             <!-- Import common Chronos resources -->
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <x:Static Member="plugin:IUtilityFactories.WpfResources" />
+                    <x:Static Member="plugin:Helpers.WpfResources" />
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </StackPanel.Resources>
