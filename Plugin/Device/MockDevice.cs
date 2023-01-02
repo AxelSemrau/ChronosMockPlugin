@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing.Design;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -47,7 +48,8 @@ namespace MockPlugin.Device
         IHaveMachineParameters<CoffeMakerParams>,
         IProvideDiagnosticLogs,
         IStopRuns,
-        IScheduleStateAware
+        IScheduleStateAware,
+        IHaveInteractiveErrorHandling
     {
         public const string DeviceTypeName = "ACME Coffee Maker";
         #region private variables
@@ -348,5 +350,36 @@ namespace MockPlugin.Device
             DebugOutput?.Invoke($"Schedule {e.PlanerName} ({e.PlanerID}) state {e.State}, abort reason {(string.IsNullOrEmpty(e.AbortReason) ? "N/A" : e.AbortReason)}");   
         }
         #endregion
+
+        public void BeginInteraction()
+        {
+            DebugOutput?.Invoke("Starting error handling interaction");
+        }
+
+        public void EndInteraction()
+        {
+            DebugOutput?.Invoke("Ending error handling interaction");
+        }
+
+        /// <summary>
+        /// "Retry" here means that we don't retry some action, but that we raise the error again.
+        /// </summary>
+        /// <param name="errorDescription"></param>
+        /// <param name="errType"></param>
+        /// <param name="resolved"></param>
+        public void RaiseError(string errorDescription, ErrorType errType, bool resolved)
+        {
+            var errArgs = new InteractiveErrorHandlingEventArgs() { Error = errorDescription, ErrorType = errType };
+            do
+            {
+                HandleError?.Invoke(this, errArgs);
+            } while (errArgs.RetryLastAction);
+
+            if (!resolved)
+            {
+                throw new IOException($"Coffee machine reported a problem: {errorDescription}");
+            }
+        }
+        public event EventHandler<InteractiveErrorHandlingEventArgs> HandleError;
     }
 }

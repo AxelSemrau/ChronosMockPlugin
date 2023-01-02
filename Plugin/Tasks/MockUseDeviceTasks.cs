@@ -426,4 +426,26 @@ namespace MockPlugin.Tasks
             return String.Format(LocalizeMockPlugin.PretendCoffeeMachineIsBroken_GetTaskAction_Will_make_the_device_abort_the_schedule_after_a_few_seconds_,SoftStop);
         }
     }
+    /// <summary>
+    /// In contrast to PretendCoffeeMachineIsBroken, this simulates an error that an autosampler could have while it is used by a task.
+    /// </summary>
+    [CoffeeCategory(4)]
+    public class CoffeeMachineDoesNotWorkProperly : CoffeeMachineBaseTask, ITaskForDevice
+    {
+        public string ErrorDescription { get; set; } = "Some random error message that is shown to the user";
+        public ErrorType ErrorType { get; set; } = ErrorType.MissingVial;
+        /// <summary>
+        /// Should we consider the error fixed after error handling has run?
+        /// </summary>
+        public bool ResolvedAfterHandling { get; set; } = false;
+        public override void Execute()
+        {
+            mDevice.RaiseError(ErrorDescription,ErrorType, ResolvedAfterHandling);
+        }
+
+        public override string GetTaskAction()
+        {
+            return $"Raising error type {ErrorType} with description \"{ErrorDescription}\"";
+        }
+    }
 }

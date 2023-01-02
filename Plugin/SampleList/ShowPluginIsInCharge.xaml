@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:plugin="clr-namespace:AxelSemrau.Chronos.Plugin;assembly=Chronos"
+             xmlns:plugin="clr-namespace:AxelSemrau.Chronos.Plugin;assembly=ChronosPluginInterfaces"
              mc:Ignorable="d"
              SizeToContent="WidthAndHeight" Title="Mock Plugin Sample List Generator" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
     <StackPanel>

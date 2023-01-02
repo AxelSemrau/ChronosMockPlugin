@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using AxelSemrau.Chronos.Plugin.Columns;
 
 /*!
@@ -10,6 +11,7 @@ namespace MockPlugin.SampleListColumns
     /// <summary>
     /// Just an example for freshly updated combobox entries.
     /// </summary>
+    /// <remarks>The [Editable(true)] attribute on the <see cref="ComboboxItems"/> property allows entering your own unlisted coffee type.</remarks>
     // ReSharper disable once UnusedType.Global
     public class CoffeeTypeColumn : IColumnTypeDefinition
     {
@@ -19,6 +21,7 @@ namespace MockPlugin.SampleListColumns
         /// <summary>
         /// Last entry is based on current time to show when it was created.
         /// </summary>
+        [Editable(true)]
         public IEnumerable<object> ComboboxItems
         {
             get

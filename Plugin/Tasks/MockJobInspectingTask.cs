@@ -22,9 +22,24 @@ namespace MockPlugin.Tasks
             }
         }
 
+        /// <summary>
+        /// Shows how you can disable other tasks in the schedule creation phase.
+        /// If there's a previous JobInspectionDemo task, let's turn it off.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
+        private void DisablePreviousTwin()
+        {
+            var prevTask = mJobInspector.CompleteSchedule
+                .TakeWhile(someTaskInfo => someTaskInfo.PluginTask != mJobInspector.CurrentTask.PluginTask).LastOrDefault();
+            if (prevTask?.PluginTask is JobInspectionDemo)
+            {
+                prevTask.Enabled = false;
+            }
+        }
+
         void ITask.PostValidate()
         {
-
+            DisablePreviousTwin();
         }
 
         private string GetJitInfo(ITaskInfo someTaskInfo, IAccessProperty somePropInfo)
